@@ -42,7 +42,7 @@ const App: () => React$Node = () => {
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>tony was here </Text>
               <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text>something something
+                Edit <Text style={styles.highlight}>App.js</Text>something somethingrr
               </Text>
             </View>
             <View style={styles.sectionContainer}>
