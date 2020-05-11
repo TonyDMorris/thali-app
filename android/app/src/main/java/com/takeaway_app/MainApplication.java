@@ -9,14 +9,14 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.soloader.SoLoader;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class MainApplication extends NavigationApplication {
 
   private final ReactNativeHost mReactNativeHost =
-      new NavigationReactNativeHost(this) {
+  new NavigationReactNativeHost(this) {
         @Override
         public boolean getUseDeveloperSupport() {
           return BuildConfig.DEBUG;
