@@ -72,14 +72,6 @@ const App = props => {
                     name: 'com.myApp.Menu',
                     passProps: {
                       categories: content.menu_categories,
-                      deals: content.menu_deals,
-                    },
-                    options: {
-                      topBar: {
-                        title: {
-                          text: 'Menu',
-                        },
-                      },
                     },
                   },
                 })
