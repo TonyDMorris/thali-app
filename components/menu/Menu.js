@@ -1,12 +1,11 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {useState} from 'react';
+import Category from './Category';
 
-const Menu = props => {
-  return (
-    <View>
-      <Text>this is the menu screen</Text>
-    </View>
-  );
+const Menu = ({categories, deals}) => {
+  const [isCollapsed, setCollapse] = useState(false);
+  return categories.map(cat => {
+    return <Category key={cat.id} />;
+  });
 };
 
 export default Menu;

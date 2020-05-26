@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -20,6 +20,36 @@ import {
 import {Navigation} from 'react-native-navigation';
 
 const App = props => {
+  const baseURL = 'https://api.towidomo.dev';
+  const resaurantId = '1';
+  const [content, setContent] = useState({});
+
+  // useEffect(() => {
+  //   return () => {
+  //     return fetch(`${baseURL}/restaurants/${resaurantId}`)
+  //       .then(response => response.json())
+  //       .then(json => {
+  //         setContent(json);
+  //         console.log
+  //         console.log(content);
+  //       })
+  //       .catch(error => {
+  //         //TODO: error screen all information is required for app to run
+  //         console.error(error);
+  //       });
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`${baseURL}/restaurants/${resaurantId}`);
+      const json = await response.json();
+
+      setContent(json[0]);
+    }
+    fetchData();
+  }, []);
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -39,7 +69,11 @@ const App = props => {
               onPress={() =>
                 Navigation.push(props.componentId, {
                   component: {
-                    name: 'Menu',
+                    name: 'com.myApp.Menu',
+                    passProps: {
+                      categories: content.menu_categories,
+                      deals: content.menu_deals,
+                    },
                     options: {
                       topBar: {
                         title: {
@@ -62,9 +96,6 @@ App.options = {
     title: {
       text: 'Thali',
       color: 'black',
-    },
-    background: {
-      color: '#feecd9',
     },
   },
 };

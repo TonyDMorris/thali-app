@@ -4,6 +4,19 @@ import Menu from './components/menu/Menu';
 
 Navigation.registerComponent('com.myApp.Home', () => App);
 Navigation.registerComponent('com.myApp.Menu', () => Menu);
+Navigation.setDefaultOptions({
+  statusBar: {
+    backgroundColor: '#4d089a',
+  },
+  topBar: {
+    backButton: {
+      color: 'red',
+    },
+    background: {
+      color: '#feecd9',
+    },
+  },
+});
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({
     root: {
