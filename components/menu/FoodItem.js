@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import NumericInput, {calcSize} from 'react-native-numeric-input';
+import NumericInput from 'react-native-numeric-input';
 const FoodItem = ({
   name,
   description,
@@ -11,32 +11,38 @@ const FoodItem = ({
   gluten_free,
   dairy_free,
   vegan_option,
+  isDeal,
 }) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={
+        isDeal ? {...styles.container} : {...styles.container, ...styles.border}
+      }>
       <View style={styles.infoContainer}>
         <Text style={styles.title}>
           {name}
 
-          <Text style={styles.price}> {price}</Text>
+          <Text style={styles.price}> {!isDeal ? price : ''}</Text>
         </Text>
         <Text style={styles.description}>{description}</Text>
       </View>
       <View style={styles.numericInput}>
-        <NumericInput
-          value={0}
-          // onChange={value => this.setState({value})}
-          totalWidth={100}
-          // totalHeight={calcSize(50)}
-          // iconSize={calcSize(25)}
-          step={1}
-          valueType="real"
-          rounded
-          textColor="#B0228C"
-          iconStyle={{color: 'white'}}
-          rightButtonBackgroundColor="#EA3788"
-          leftButtonBackgroundColor="#E56B70"
-        />
+        {!isDeal && (
+          <NumericInput
+            value={0}
+            // onChange={value => this.setState({value})}
+            totalWidth={100}
+            // totalHeight={calcSize(50)}
+            // iconSize={calcSize(25)}
+            step={1}
+            valueType="real"
+            rounded
+            textColor="#B0228C"
+            iconStyle={{color: 'white'}}
+            rightButtonBackgroundColor="#EA3788"
+            leftButtonBackgroundColor="#E56B70"
+          />
+        )}
       </View>
     </View>
   );
@@ -45,12 +51,11 @@ const FoodItem = ({
 export default FoodItem;
 
 const styles = StyleSheet.create({
+  border: {borderTopColor: 'silver', borderTopWidth: 1},
   container: {
     flexDirection: 'row',
 
     backgroundColor: 'whitesmoke',
-    borderTopColor: 'silver',
-    borderWidth: 1,
   },
   infoContainer: {
     alignSelf: 'flex-start',
