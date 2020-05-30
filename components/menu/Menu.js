@@ -1,11 +1,16 @@
 import React, {useState} from 'react';
 import Category from './Category';
+import {BasketPriovder} from '../basket/BasketContext';
 
 const Menu = ({categories}) => {
   const [isCollapsed, setCollapse] = useState(false);
-  return categories.map(cat => {
-    return <Category key={cat.id} {...cat} />;
-  });
+  return (
+    <BasketPriovder>
+      {categories.map(cat => {
+        return <Category key={cat.id} {...cat} />;
+      })}
+    </BasketPriovder>
+  );
 };
 
 Menu.options = {

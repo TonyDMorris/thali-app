@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import NumericInput from 'react-native-numeric-input';
+
 const FoodItem = ({
   name,
   description,
@@ -21,7 +22,6 @@ const FoodItem = ({
       <View style={styles.infoContainer}>
         <Text style={styles.title}>
           {name}
-
           <Text style={styles.price}> {!isDeal ? price : ''}</Text>
         </Text>
         <Text style={styles.description}>{description}</Text>

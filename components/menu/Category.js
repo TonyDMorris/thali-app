@@ -1,17 +1,21 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Button} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import FoodItem from './FoodItem';
 import DealItem from './DealItem';
 import {StyleSheet, Text, View} from 'react-native';
+import {BasketContext} from '../basket/BasketContext';
 
 const Category = ({name, food_items, menu_deals}) => {
   const [isCollapsed, setCollapse] = useState(true);
+  const context = useContext(BasketContext);
+
   return (
     <>
       <Button
         title={`${name}`}
         onPress={() => {
+          console.log(context);
           setCollapse(!isCollapsed);
         }}
       />

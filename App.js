@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 
 import {Navigation} from 'react-native-navigation';
+import {BasketPriovder} from './components/basket/BasketContext';
 
 const App = props => {
   const baseURL = 'https://api.towidomo.dev';
@@ -51,7 +52,7 @@ const App = props => {
   }, []);
 
   return (
-    <>
+    <BasketPriovder>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ImageBackground
@@ -80,7 +81,7 @@ const App = props => {
           </ScrollView>
         </ImageBackground>
       </SafeAreaView>
-    </>
+    </BasketPriovder>
   );
 };
 App.options = {

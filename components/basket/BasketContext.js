@@ -1,8 +1,13 @@
-import React, {createContext} from 'react';
+import React, {createContext, useState} from 'react';
 import {View, Text} from 'react-native';
 
-const BasketContext = createContext({foodItems:[],dealItems:[],updateItems:})
-const updateItems = ()=>{
-     const ctx = useContext(BasketContext)
-}
-export default BasketContext;
+export const BasketContext = createContext({});
+
+export const BasketPriovder = props => {
+  const [items, setItems] = useState({});
+  return (
+    <BasketContext.Provider value={{items, setItems}}>
+      {props.children}
+    </BasketContext.Provider>
+  );
+};
