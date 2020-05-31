@@ -19,6 +19,7 @@ import {
 
 import {Navigation} from 'react-native-navigation';
 import {BasketPriovder} from './components/basket/BasketContext';
+import BasketTopBar from './components/basket/BasketTopBar';
 
 const App = props => {
   const baseURL = 'https://api.towidomo.dev';
@@ -87,8 +88,7 @@ const App = props => {
 App.options = {
   topBar: {
     title: {
-      text: 'Thali',
-      color: 'black',
+      component: {name: 'com.myApp.BasketTopBar', alignment: 'center'},
     },
   },
 };
