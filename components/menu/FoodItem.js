@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import NumericInput from 'react-native-numeric-input';
+import AddItem from './AddItem';
 
 const FoodItem = ({
   name,
@@ -26,24 +26,7 @@ const FoodItem = ({
         </Text>
         <Text style={styles.description}>{description}</Text>
       </View>
-      <View style={styles.numericInput}>
-        {!isDeal && (
-          <NumericInput
-            value={0}
-            // onChange={value => this.setState({value})}
-            totalWidth={100}
-            // totalHeight={calcSize(50)}
-            // iconSize={calcSize(25)}
-            step={1}
-            valueType="real"
-            rounded
-            textColor="#B0228C"
-            iconStyle={{color: 'white'}}
-            rightButtonBackgroundColor="#EA3788"
-            leftButtonBackgroundColor="#E56B70"
-          />
-        )}
-      </View>
+      <View style={styles.addItem}>{!isDeal && <AddItem />}</View>
     </View>
   );
 };
@@ -54,7 +37,7 @@ const styles = StyleSheet.create({
   border: {borderTopColor: 'silver', borderTopWidth: 1},
   container: {
     flexDirection: 'row',
-
+    justifyContent: 'space-between',
     backgroundColor: 'whitesmoke',
   },
   infoContainer: {
@@ -70,5 +53,5 @@ const styles = StyleSheet.create({
   },
   description: {marginBottom: 10},
   price: {fontSize: 14},
-  numericInput: {alignSelf: 'center', marginRight: 5},
+  addItem: {alignSelf: 'center', marginRight: '5%'},
 });
