@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 
 import {Navigation} from 'react-native-navigation';
-import {BasketPriovder} from './components/basket/BasketContext';
+import {BasketProvider} from './components/basket/BasketContext';
 import BasketTopBar from './components/basket/BasketTopBar';
 
 const App = props => {
@@ -53,7 +53,7 @@ const App = props => {
   }, []);
 
   return (
-    <BasketPriovder>
+    <BasketProvider>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ImageBackground
@@ -82,13 +82,16 @@ const App = props => {
           </ScrollView>
         </ImageBackground>
       </SafeAreaView>
-    </BasketPriovder>
+    </BasketProvider>
   );
 };
 App.options = {
   topBar: {
     title: {
-      component: {name: 'com.myApp.BasketTopBar', alignment: 'center'},
+      component: {
+        name: 'com.myApp.BasketTopBar',
+        alignment: 'center',
+      },
     },
   },
 };

@@ -1,23 +1,27 @@
 import React, {useState} from 'react';
 import Category from './Category';
-import {BasketPriovder} from '../basket/BasketContext';
+import {BasketProvider} from '../basket/BasketContext';
+import {ScrollView} from 'react-native';
 
 const Menu = ({categories}) => {
-  const [isCollapsed, setCollapse] = useState(false);
   return (
-    <BasketPriovder>
-      {categories.map(cat => {
-        return <Category key={cat.id} {...cat} />;
-      })}
-    </BasketPriovder>
+    <BasketProvider>
+      <ScrollView>
+        {categories.map(cat => {
+          return <Category key={cat.id} {...cat} />;
+        })}
+      </ScrollView>
+    </BasketProvider>
   );
 };
 
 Menu.options = {
   topBar: {
     title: {
-      text: 'Menu',
-      alignment: 'center',
+      component: {
+        name: 'com.myApp.BasketTopBar',
+        alignment: 'center',
+      },
     },
   },
 };
