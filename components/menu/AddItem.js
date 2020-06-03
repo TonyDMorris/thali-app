@@ -1,11 +1,33 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
-const AddItem = () => {
+import {Navigation} from 'react-native-navigation';
+import {BasketContext} from '../basket/BasketContext';
+const AddItem = props => {
+  const context = useContext(BasketContext);
+  const foodItem = ({
+    name,
+    description,
+    price,
+    id,
+    vegan,
+    vegetarian,
+    gluten_free,
+    dairy_free,
+    vegan_option,
+    food_item_options,
+  } = props);
+
+  const handlePress = () => {
+    if (food_item_options.length === 0) {
+      context.addFoodItem(foodItem);
+    }
+  };
+
   return (
-    <TouchableOpacity style={styles.container}>
-      <FontAwesomeIcon icon={faPlus} size={50} />
+    <TouchableOpacity onPress={handlePress} style={styles.container}>
+      <FontAwesomeIcon icon={faPlus} size={30} />
     </TouchableOpacity>
   );
 };

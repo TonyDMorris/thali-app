@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     borderRadius: (Dimensions.get('window').width - 100) / 2,
     alignSelf: 'center',
     opacity: 0.7,
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: 'red',
     marginBottom: 100,
     marginTop: 50,

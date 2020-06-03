@@ -2,10 +2,11 @@ import React from 'react';
 
 import FoodItem from './FoodItem';
 
-const DealItem = ({name, description, price, menu_deal_options}) => {
+const DealItem = props => {
+  const {name, description, price, menu_deal_options} = props;
   return (
     <>
-      <FoodItem name={name} description={description} price={price} />
+      <FoodItem {...props} />
       {menu_deal_options.map(menuDealOption => {
         return menuDealOption.food_items.map(foodItem => {
           return <FoodItem key={foodItem.id} {...foodItem} isDeal={true} />;

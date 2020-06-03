@@ -19,11 +19,11 @@ const BasketTopBar = () => {
       <Text style={styles.title}>Thali</Text>
       <TouchableOpacity style={styles.basket}>
         <View style={styles.counter}>
-          <Text style={styles.counterText}>{context.items}</Text>
+          <Text style={styles.counterText}>{context.items.length}</Text>
         </View>
         <FontAwesomeIcon
           style={styles.basketIcon}
-          size={40}
+          size={32}
           icon={faShoppingCart}
         />
       </TouchableOpacity>
@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'whitesmoke',
     borderWidth: 0.7,
     borderColor: 'whitesmoke',
-    top: 20,
-    left: 10,
+    top: 5,
+    left: 5,
     zIndex: 2,
     height: 25,
     width: 25,

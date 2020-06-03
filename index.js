@@ -4,9 +4,11 @@ import App from './App';
 import Menu from './components/menu/Menu';
 import BasketTopBar from './components/basket/BasketTopBar';
 import {BasketProvider} from './components/basket/BasketContext';
+import SelectionModal from './components/selection/SelectionModal';
 
 Navigation.registerComponent('com.myApp.Home', () => App);
 Navigation.registerComponent('com.myApp.Menu', () => Menu);
+Navigation.registerComponent('com.myApp.SelectionModal', () => SelectionModal);
 Navigation.registerComponent(
   'com.myApp.BasketTopBar',
   () => props => (

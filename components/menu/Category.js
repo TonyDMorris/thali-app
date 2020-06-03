@@ -1,24 +1,35 @@
 import React, {useState, useContext} from 'react';
-import {Button, TouchableOpacity} from 'react-native';
+import {
+  Button,
+  TouchableOpacity,
+  TouchableHighlight,
+  TouchableHighlightBase,
+} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import FoodItem from './FoodItem';
 import DealItem from './DealItem';
 import {StyleSheet, Text, View} from 'react-native';
 import {BasketContext} from '../basket/BasketContext';
-
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faSortUp, faSortDown} from '@fortawesome/free-solid-svg-icons';
 const Category = ({name, food_items, menu_deals}) => {
   const [isCollapsed, setCollapse] = useState(true);
-  const context = useContext(BasketContext);
 
   return (
     <>
       <TouchableOpacity
         style={styles.categoryButton}
         onPress={() => {
-          console.log(context);
           setCollapse(!isCollapsed);
         }}>
         <Text>{`${name}`}</Text>
+        <View>
+          <FontAwesomeIcon
+            color="whitesmoke"
+            size={20}
+            icon={isCollapsed ? faSortDown : faSortUp}
+          />
+        </View>
       </TouchableOpacity>
       <Collapsible collapsed={isCollapsed}>
         {menu_deals.map(deal => {
@@ -41,5 +52,9 @@ const styles = StyleSheet.create({
     borderColor: 'grey',
     backgroundColor: '#f8baaa',
     elevation: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    justifyContent: 'space-between',
   },
 });

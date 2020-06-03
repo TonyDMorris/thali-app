@@ -2,18 +2,20 @@ import React, {useContext} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import AddItem from './AddItem';
 
-const FoodItem = ({
-  name,
-  description,
-  price,
-  id,
-  vegan,
-  vegetarian,
-  gluten_free,
-  dairy_free,
-  vegan_option,
-  isDeal,
-}) => {
+const FoodItem = props => {
+  const foodItem = ({
+    name,
+    description,
+    price,
+    id,
+    vegan,
+    vegetarian,
+    gluten_free,
+    dairy_free,
+    vegan_option,
+    isDeal,
+    food_item_options,
+  } = props);
   return (
     <View
       style={
@@ -26,7 +28,7 @@ const FoodItem = ({
         </Text>
         <Text style={styles.description}>{description}</Text>
       </View>
-      <View style={styles.addItem}>{!isDeal && <AddItem />}</View>
+      <View style={styles.addItem}>{!isDeal && <AddItem {...foodItem} />}</View>
     </View>
   );
 };

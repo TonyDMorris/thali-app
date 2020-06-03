@@ -5,13 +5,15 @@ import {ScrollView} from 'react-native';
 
 const Menu = ({categories}) => {
   return (
-    <BasketProvider>
-      <ScrollView>
-        {categories.map(cat => {
-          return <Category key={cat.id} {...cat} />;
-        })}
-      </ScrollView>
-    </BasketProvider>
+    <ScrollView>
+      {categories.map(cat => {
+        return (
+          <BasketProvider>
+            <Category key={cat.id} {...cat} />
+          </BasketProvider>
+        );
+      })}
+    </ScrollView>
   );
 };
 
