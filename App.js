@@ -15,6 +15,8 @@ import {
   StyleSheet,
   ImageBackground,
   Button,
+  Dimensions,
+  View,
 } from 'react-native';
 
 import {Navigation} from 'react-native-navigation';
@@ -25,22 +27,6 @@ const App = props => {
   const baseURL = 'https://api.towidomo.dev';
   const resaurantId = '1';
   const [content, setContent] = useState({});
-
-  // useEffect(() => {
-  //   return () => {
-  //     return fetch(`${baseURL}/restaurants/${resaurantId}`)
-  //       .then(response => response.json())
-  //       .then(json => {
-  //         setContent(json);
-  //         console.log
-  //         console.log(content);
-  //       })
-  //       .catch(error => {
-  //         //TODO: error screen all information is required for app to run
-  //         console.error(error);
-  //       });
-  //   };
-  // }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -58,27 +44,31 @@ const App = props => {
       <SafeAreaView>
         <ImageBackground
           style={styles.backgroundImage}
-          source={require('./assests/images/Mumbai_Dabbawala_or_Tiffin_Wallahs-_200,000_Tiffin_Boxes_Delivered_Per_Day.jpg')}>
+          source={require('./assests/images/51095796_2175438532521043_6085140477068181504_o.jpg')}>
           <ScrollView
             style={styles.container}
             contentInsetAdjustmentBehavior="automatic">
             <Image
               style={styles.logo}
-              source={require('./assests/images/thalilogo.png')}
+              source={require('./assests/images/53219015_2217301215001441_9170682825471426560_n.jpg')}
             />
-            <Button
-              title="Menu"
-              onPress={() =>
-                Navigation.push(props.componentId, {
-                  component: {
-                    name: 'com.myApp.Menu',
-                    passProps: {
-                      categories: content.menu_categories,
+            <View style={styles.buttonContainer}>
+              <Button
+                color="#f8bac7"
+                buttonStyle={styles.menuButton}
+                title="Menu"
+                onPress={() =>
+                  Navigation.push(props.componentId, {
+                    component: {
+                      name: 'com.myApp.Menu',
+                      passProps: {
+                        categories: content.menu_categories,
+                      },
                     },
-                  },
-                })
-              }
-            />
+                  })
+                }
+              />
+            </View>
           </ScrollView>
         </ImageBackground>
       </SafeAreaView>
@@ -98,11 +88,16 @@ App.options = {
 
 const styles = StyleSheet.create({
   logo: {
-    width: 200,
-    height: 200,
+    width: Dimensions.get('window').width - 100,
+    height: Dimensions.get('window').width - 100,
     backgroundColor: '#f4f4f4',
-    borderRadius: 100,
+    borderRadius: (Dimensions.get('window').width - 100) / 2,
     alignSelf: 'center',
+    opacity: 0.7,
+    borderWidth: 1,
+    borderColor: 'red',
+    marginBottom: 100,
+    marginTop: 50,
   },
   container: {
     padding: 20,
@@ -113,6 +108,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     height: 700,
   },
+  buttonContainer: {width: 300, alignSelf: 'center'},
 });
 
 export default App;

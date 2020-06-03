@@ -22,10 +22,10 @@ Navigation.setDefaultOptions({
   },
   topBar: {
     backButton: {
-      color: 'red',
+      color: 'black',
     },
     background: {
-      color: '#feecd9',
+      color: '#f8bac7',
     },
   },
 });

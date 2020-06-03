@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {Button} from 'react-native';
+import {Button, TouchableOpacity} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import FoodItem from './FoodItem';
 import DealItem from './DealItem';
@@ -12,13 +12,14 @@ const Category = ({name, food_items, menu_deals}) => {
 
   return (
     <>
-      <Button
-        title={`${name}`}
+      <TouchableOpacity
+        style={styles.categoryButton}
         onPress={() => {
           console.log(context);
           setCollapse(!isCollapsed);
-        }}
-      />
+        }}>
+        <Text>{`${name}`}</Text>
+      </TouchableOpacity>
       <Collapsible collapsed={isCollapsed}>
         {menu_deals.map(deal => {
           return <DealItem key={deal.id} {...deal} />;
@@ -33,4 +34,12 @@ const Category = ({name, food_items, menu_deals}) => {
 
 export default Category;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  categoryButton: {
+    height: 50,
+    borderWidth: 0.2,
+    borderColor: 'grey',
+    backgroundColor: '#f8baaa',
+    elevation: 5,
+  },
+});

@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   TouchableNativeFeedback,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {BasketContext} from './BasketContext';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexGrow: 1,
 
+    borderColor: 'black',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderColor: 'black',
@@ -44,7 +46,9 @@ const styles = StyleSheet.create({
   basket: {
     borderWidth: 0.5,
 
-    borderColor: 'whitesmoke',
+    borderColor: 'black',
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 1,
     height: '100%',
     width: '20%',
     justifyContent: 'center',
@@ -67,6 +71,17 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25,
     borderRadius: 25 / 2,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 10,
+      },
+    }),
   },
   counterText: {alignSelf: 'center', fontSize: 24},
 });
