@@ -2,10 +2,9 @@ import React, {useContext} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
-import {Navigation} from 'react-native-navigation';
 import {BasketContext} from '../basket/BasketContext';
+
 const AddItem = props => {
-  const context = useContext(BasketContext);
   const foodItem = ({
     name,
     description,
@@ -19,11 +18,7 @@ const AddItem = props => {
     food_item_options,
   } = props);
 
-  const handlePress = () => {
-    if (food_item_options.length === 0) {
-      context.addFoodItem(foodItem);
-    }
-  };
+  const handlePress = () => {};
 
   return (
     <TouchableOpacity onPress={handlePress} style={styles.container}>

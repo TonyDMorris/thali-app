@@ -9,15 +9,7 @@ import SelectionModal from './components/selection/SelectionModal';
 Navigation.registerComponent('com.myApp.Home', () => App);
 Navigation.registerComponent('com.myApp.Menu', () => Menu);
 Navigation.registerComponent('com.myApp.SelectionModal', () => SelectionModal);
-Navigation.registerComponent(
-  'com.myApp.BasketTopBar',
-  () => props => (
-    <BasketProvider>
-      <BasketTopBar {...props} />
-    </BasketProvider>
-  ),
-  () => BasketTopBar,
-);
+Navigation.registerComponent('com.myApp.BasketTopBar', () => BasketTopBar);
 Navigation.setDefaultOptions({
   statusBar: {
     backgroundColor: '#4d089a',

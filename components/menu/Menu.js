@@ -7,11 +7,7 @@ const Menu = ({categories}) => {
   return (
     <ScrollView>
       {categories.map(cat => {
-        return (
-          <BasketProvider>
-            <Category key={cat.id} {...cat} />
-          </BasketProvider>
-        );
+        return <Category key={cat.id} {...cat} />;
       })}
     </ScrollView>
   );

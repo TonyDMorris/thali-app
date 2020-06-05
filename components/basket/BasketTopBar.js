@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,15 +11,15 @@ import {
 import {BasketContext} from './BasketContext';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faShoppingCart} from '@fortawesome/free-solid-svg-icons';
+import BasketSingleton from '../basket/BasketSingleton';
 
 const BasketTopBar = () => {
-  const context = useContext(BasketContext);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Thali</Text>
       <TouchableOpacity style={styles.basket}>
         <View style={styles.counter}>
-          <Text style={styles.counterText}>{context.items.length}</Text>
+          <Text style={styles.counterText}>{10}</Text>
         </View>
         <FontAwesomeIcon
           style={styles.basketIcon}

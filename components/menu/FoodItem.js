@@ -16,6 +16,7 @@ const FoodItem = props => {
     isDeal,
     food_item_options,
   } = props);
+
   return (
     <View
       style={

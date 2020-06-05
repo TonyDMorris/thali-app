@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -21,7 +21,7 @@ import {
 
 import {Navigation} from 'react-native-navigation';
 import {BasketProvider} from './components/basket/BasketContext';
-import BasketTopBar from './components/basket/BasketTopBar';
+import {BasketContext} from './components/basket/BasketContext';
 
 const App = props => {
   const baseURL = 'https://api.towidomo.dev';
@@ -39,7 +39,7 @@ const App = props => {
   }, []);
 
   return (
-    <BasketProvider>
+    <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ImageBackground
@@ -61,6 +61,7 @@ const App = props => {
                   Navigation.push(props.componentId, {
                     component: {
                       name: 'com.myApp.Menu',
+                      options: {},
                       passProps: {
                         categories: content.menu_categories,
                       },
@@ -72,16 +73,13 @@ const App = props => {
           </ScrollView>
         </ImageBackground>
       </SafeAreaView>
-    </BasketProvider>
+    </>
   );
 };
 App.options = {
   topBar: {
     title: {
-      component: {
-        name: 'com.myApp.BasketTopBar',
-        alignment: 'center',
-      },
+      name: 'thali',
     },
   },
 };

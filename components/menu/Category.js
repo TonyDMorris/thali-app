@@ -9,7 +9,7 @@ import Collapsible from 'react-native-collapsible';
 import FoodItem from './FoodItem';
 import DealItem from './DealItem';
 import {StyleSheet, Text, View} from 'react-native';
-import {BasketContext} from '../basket/BasketContext';
+import {BasketProvider} from '../basket/BasketContext';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSortUp, faSortDown} from '@fortawesome/free-solid-svg-icons';
 const Category = ({name, food_items, menu_deals}) => {
@@ -36,7 +36,7 @@ const Category = ({name, food_items, menu_deals}) => {
           return <DealItem key={deal.id} {...deal} />;
         })}
         {food_items.map(fi => {
-          return <FoodItem key={fi.id} {...fi} />;
+          return <FoodItem key={fi.id} key={fi.id} {...fi} />;
         })}
       </Collapsible>
     </>
