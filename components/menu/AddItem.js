@@ -3,8 +3,10 @@ import {StyleSheet, TouchableOpacity} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import {BasketContext} from '../basket/BasketContext';
+import {Navigation} from 'react-native-navigation';
 
 const AddItem = props => {
+  const context = useContext(BasketContext);
   const foodItem = ({
     name,
     description,
@@ -17,11 +19,44 @@ const AddItem = props => {
     vegan_option,
     food_item_options,
   } = props);
+  const handlePress = foodItem => {
+    if (foodItem.food_item_options.length === 0) {
+      context.addItem(foodItem);
+    }
 
-  const handlePress = () => {};
+    if (foodItem.food_item_options.length > 0) {
+      Navigation.showModal({
+        stack: {
+          children: [
+            {
+              component: {
+                name: 'com.myApp.SelectionModal',
+                passProps: {
+                  item: foodItem,
+                  addItem: context.addItem,
+                },
+                options: {
+                  modalPresentationStyle: 'overCurrentContext',
+                  topBar: {
+                    title: {
+                      text: 'Selection',
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      });
+    }
+  };
 
   return (
-    <TouchableOpacity onPress={handlePress} style={styles.container}>
+    <TouchableOpacity
+      onPress={() => {
+        handlePress(foodItem);
+      }}
+      style={styles.container}>
       <FontAwesomeIcon icon={faPlus} size={30} />
     </TouchableOpacity>
   );
