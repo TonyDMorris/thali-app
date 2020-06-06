@@ -10,7 +10,6 @@ import React, {useEffect, useState, useContext} from 'react';
 import {
   SafeAreaView,
   ScrollView,
-  StatusBar,
   Image,
   StyleSheet,
   ImageBackground,
@@ -20,27 +19,10 @@ import {
 } from 'react-native';
 
 import {Navigation} from 'react-native-navigation';
-import {BasketProvider} from './components/basket/BasketContext';
-import {BasketContext} from './components/basket/BasketContext';
 
 const App = props => {
-  const baseURL = 'https://api.towidomo.dev';
-  const resaurantId = '1';
-  const [content, setContent] = useState({});
-
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(`${baseURL}/restaurants/${resaurantId}`);
-      const json = await response.json();
-
-      setContent(json[0]);
-    }
-    fetchData();
-  }, []);
-
   return (
     <>
-      <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ImageBackground
           style={styles.backgroundImage}
@@ -54,7 +36,7 @@ const App = props => {
             />
             <View style={styles.buttonContainer}>
               <Button
-                color="#f8bac7"
+                color="#039894"
                 buttonStyle={styles.menuButton}
                 title="Menu"
                 onPress={() =>
@@ -62,9 +44,6 @@ const App = props => {
                     component: {
                       name: 'com.myApp.Menu',
                       options: {},
-                      passProps: {
-                        categories: content.menu_categories,
-                      },
                     },
                   })
                 }
@@ -79,7 +58,7 @@ const App = props => {
 App.options = {
   topBar: {
     title: {
-      name: 'thali',
+      text: 'Thali',
     },
   },
 };
