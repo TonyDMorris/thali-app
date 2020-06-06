@@ -14,15 +14,19 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSortUp, faSortDown} from '@fortawesome/free-solid-svg-icons';
 const Category = ({name, food_items, menu_deals}) => {
   const [isCollapsed, setCollapse] = useState(true);
-
+  const [loaded, setLoaded] = useState(false);
   return (
     <>
       <TouchableOpacity
+        activeOpacity={0.7}
         style={styles.categoryButton}
         onPress={() => {
+          if (!loaded) {
+            setLoaded(true);
+          }
           setCollapse(!isCollapsed);
         }}>
-        <Text>{`${name}`}</Text>
+        <Text style={styles.text}>{`${name}`}</Text>
         <View>
           <FontAwesomeIcon
             color="whitesmoke"
@@ -31,13 +35,15 @@ const Category = ({name, food_items, menu_deals}) => {
           />
         </View>
       </TouchableOpacity>
-      <Collapsible collapsed={isCollapsed}>
-        {menu_deals.map(deal => {
-          return <DealItem key={deal.id} {...deal} />;
-        })}
-        {food_items.map(fi => {
-          return <FoodItem key={fi.id} key={fi.id} {...fi} />;
-        })}
+      <Collapsible style={styles.collapsible} collapsed={isCollapsed}>
+        {loaded &&
+          menu_deals.map(deal => {
+            return <DealItem key={deal.id} {...deal} />;
+          })}
+        {loaded &&
+          food_items.map(fi => {
+            return <FoodItem key={fi.id} {...fi} />;
+          })}
       </Collapsible>
     </>
   );
@@ -47,14 +53,15 @@ export default Category;
 
 const styles = StyleSheet.create({
   categoryButton: {
+    width: '100%',
     height: 50,
-    borderWidth: 0.2,
-    borderColor: 'grey',
-    backgroundColor: '#f8baaa',
+    backgroundColor: '#0398aa',
     elevation: 5,
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
     justifyContent: 'space-between',
   },
+  collapsible: {},
+  text: {color: 'black', fontSize: 20, fontWeight: '200'},
 });
