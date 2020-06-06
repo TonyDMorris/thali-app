@@ -23,13 +23,15 @@ const FoodItem = props => {
         isDeal ? {...styles.container} : {...styles.container, ...styles.border}
       }>
       <View style={styles.infoContainer}>
-        <Text style={styles.title}>
-          {name}
-          <Text style={styles.price}> {!isDeal ? price : ''}</Text>
-        </Text>
+        <Text style={styles.title}>{name}</Text>
         <Text style={styles.description}>{description}</Text>
       </View>
-      <View style={styles.addItem}>{!isDeal && <AddItem {...foodItem} />}</View>
+      <View style={styles.addItem}>
+        {!isDeal && <AddItem {...foodItem} />}
+        <Text style={styles.price}>
+          {!isDeal ? `£ ${parseFloat(price).toFixed(2)}` : ''}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -37,11 +39,13 @@ const FoodItem = props => {
 export default FoodItem;
 
 const styles = StyleSheet.create({
-  border: {borderTopColor: 'silver', borderTopWidth: 1},
+  border: {borderTopWidth: 1},
   container: {
+    opacity: 0.9,
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: 'whitesmoke',
+    padding: 5,
   },
   infoContainer: {
     alignSelf: 'flex-start',
@@ -56,5 +60,11 @@ const styles = StyleSheet.create({
   },
   description: {marginBottom: 10},
   price: {fontSize: 14},
-  addItem: {alignSelf: 'center', marginRight: '5%'},
+  addItem: {
+    justifyContent: 'space-around',
+    flexDirection: 'column',
+    marginRight: '5%',
+
+    alignItems: 'center',
+  },
 });
