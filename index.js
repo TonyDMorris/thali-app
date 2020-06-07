@@ -3,7 +3,7 @@ import {Navigation} from 'react-native-navigation';
 import App from './App';
 import Menu from './components/menu/Menu';
 import {BasketProvider} from './components/basket/BasketContext';
-import SelectionModal from './components/selection/SelectionModal';
+import FoodItemOptionsSelectionModal from './components/selection/FoodItemOptionsSelectionModal';
 
 Navigation.registerComponent('com.myApp.Home', () => App);
 Navigation.registerComponent(
@@ -18,15 +18,15 @@ Navigation.registerComponent(
   () => Menu,
 );
 Navigation.registerComponent(
-  'com.myApp.SelectionModal',
+  'com.myApp.FoodItemOptionsSelectionModal',
   () => props => {
     return (
       <BasketProvider>
-        <SelectionModal {...props} />
+        <FoodItemOptionsSelectionModal {...props} />
       </BasketProvider>
     );
   },
-  () => SelectionModal,
+  () => FoodItemOptionsSelectionModal,
 );
 Navigation.setDefaultOptions({
   statusBar: {},

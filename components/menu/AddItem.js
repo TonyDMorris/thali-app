@@ -18,28 +18,30 @@ const AddItem = props => {
     dairy_free,
     vegan_option,
     food_item_options,
+    food_item_options_minimum_selection,
+    food_item_options_maximum_selection,
   } = props);
   const handlePress = foodItem => {
-    if (foodItem.food_item_options.length === 0) {
+    if (foodItem.food_item_options && foodItem.food_item_options.length === 0) {
       context.addItem(foodItem);
     }
 
-    if (foodItem.food_item_options.length > 0) {
+    if (foodItem.food_item_options && foodItem.food_item_options.length > 0) {
       Navigation.showModal({
         stack: {
           children: [
             {
               component: {
-                name: 'com.myApp.SelectionModal',
+                name: 'com.myApp.FoodItemOptionsSelectionModal',
                 passProps: {
-                  item: foodItem,
+                  foodItem: foodItem,
                   addItem: context.addItem,
                 },
                 options: {
                   modalPresentationStyle: 'overCurrentContext',
                   topBar: {
                     title: {
-                      text: 'Selection',
+                      text: `Select ${food_item_options_minimum_selection} - ${food_item_options_maximum_selection} options`,
                     },
                   },
                 },

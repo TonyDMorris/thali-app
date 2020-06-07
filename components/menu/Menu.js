@@ -28,7 +28,7 @@ const Menu = ({categories}) => {
   return (
     <ImageBackground
       style={styles.backgroundImage}
-      source={require('../../assests/images/52854544_2221519711246258_720619186404982784_o.jpg')}>
+      source={require('../../assets/images/52854544_2221519711246258_720619186404982784_o.jpg')}>
       <View style={styles.scrollView}>
         <ScrollView>
           {content &&

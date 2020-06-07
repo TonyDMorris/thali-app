@@ -15,6 +15,8 @@ const FoodItem = props => {
     vegan_option,
     isDeal,
     food_item_options,
+    food_item_options_minimum_selection,
+    food_item_options_maximum_selection,
   } = props);
 
   return (

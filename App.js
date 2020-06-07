@@ -26,13 +26,13 @@ const App = props => {
       <SafeAreaView>
         <ImageBackground
           style={styles.backgroundImage}
-          source={require('./assests/images/51095796_2175438532521043_6085140477068181504_o.jpg')}>
+          source={require('./assets/images/51095796_2175438532521043_6085140477068181504_o.jpg')}>
           <ScrollView
             style={styles.container}
             contentInsetAdjustmentBehavior="automatic">
             <Image
               style={styles.logo}
-              source={require('./assests/images/53219015_2217301215001441_9170682825471426560_n.jpg')}
+              source={require('./assets/images/53219015_2217301215001441_9170682825471426560_n.jpg')}
             />
             <View style={styles.buttonContainer}>
               <Button
