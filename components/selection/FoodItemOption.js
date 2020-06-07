@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight,
-  qty,
-  addOption,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableHighlight} from 'react-native';
 
 const FoodItemOption = ({
   id,
@@ -15,12 +8,24 @@ const FoodItemOption = ({
   additional_charge,
   addOption,
   removeOption,
+  food_item_options_maximum_selection,
   qty,
+  totalQuantity,
 }) => {
+  const handlePress = (option, max, totalQuantity) => {
+    console.log(max, totalQuantity);
+    if (totalQuantity < max) {
+      addOption(option);
+    }
+  };
   return (
     <TouchableHighlight
       onPress={() => {
-        addOption({id, title, additional_charge});
+        handlePress(
+          {id, title, additional_charge},
+          food_item_options_maximum_selection,
+          totalQuantity,
+        );
       }}>
       <View
         style={qty > 0 ? {...styles.view, ...styles.selected} : styles.view}>

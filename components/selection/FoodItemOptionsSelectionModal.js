@@ -55,6 +55,10 @@ const FoodItemOptionsSelectionModal = ({foodItem, addItem}) => {
               key={option.id}
               {...option}
               qty={qty}
+              food_item_options_maximum_selection={
+                foodItem.food_item_options_maximum_selection
+              }
+              totalQuantity={totalQuantity}
               addOption={addOption}
             />
           );

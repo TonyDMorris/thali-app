@@ -21,6 +21,13 @@ const AddItem = props => {
     food_item_options_minimum_selection,
     food_item_options_maximum_selection,
   } = props);
+  const selectionNumberString = (min, max) => {
+    if (min === max) {
+      return `Select ${min} option${min > 1 ? 's' : ''}`;
+    } else {
+      `Select between ${min} and ${max} options`;
+    }
+  };
   const handlePress = foodItem => {
     if (foodItem.food_item_options && foodItem.food_item_options.length === 0) {
       context.addItem(foodItem);
@@ -41,7 +48,10 @@ const AddItem = props => {
                   modalPresentationStyle: 'overCurrentContext',
                   topBar: {
                     title: {
-                      text: `Select ${food_item_options_minimum_selection} - ${food_item_options_maximum_selection} options`,
+                      text: selectionNumberString(
+                        foodItem.food_item_options_minimum_selection,
+                        foodItem.food_item_options_maximum_selection,
+                      ),
                     },
                   },
                 },
