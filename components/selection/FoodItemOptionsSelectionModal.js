@@ -63,7 +63,7 @@ const FoodItemOptionsSelectionModal = ({foodItem, addItem}) => {
             />
           );
         })}
-        <Text>{JSON.stringify(options)}</Text>
+
         <Button
           disabled={
             totalQuantity >= foodItem.food_item_options_minimum_selection &&

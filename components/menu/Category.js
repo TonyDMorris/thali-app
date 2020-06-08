@@ -56,7 +56,17 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     backgroundColor: '#0398aa',
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
