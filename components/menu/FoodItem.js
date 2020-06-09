@@ -52,15 +52,16 @@ const styles = StyleSheet.create({
   infoContainer: {
     alignSelf: 'flex-start',
     width: '70%',
-
+    flexDirection: 'column',
+    justifyContent: 'space-around',
     marginLeft: 10,
+    padding: 10,
   },
   title: {
-    marginTop: 5,
-    marginBottom: 10,
     fontSize: 18,
+    paddingBottom: 5,
   },
-  description: {marginBottom: 10},
+  description: {paddingBottom: 5},
   price: {fontSize: 14},
   addItem: {
     justifyContent: 'space-around',

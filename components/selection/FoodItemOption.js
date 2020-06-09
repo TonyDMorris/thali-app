@@ -13,11 +13,14 @@ const FoodItemOption = ({
   qty,
   totalQuantity,
 }) => {
-  const handlePress = (option, max, totalQuantity) => {
+  const handleSelect = (option, max, totalQuantity) => {
     console.log(max, totalQuantity);
     if (totalQuantity < max) {
       addOption(option);
     }
+  };
+  const handleRemove = id => {
+    removeOption({id});
   };
   return (
     <View
@@ -27,7 +30,7 @@ const FoodItemOption = ({
       <TouchableHighlight
         style={styles.optionButton}
         onPress={() => {
-          handlePress(
+          handleSelect(
             {id, title, additional_charge},
             food_item_options_maximum_selection,
             totalQuantity,
@@ -54,7 +57,11 @@ const FoodItemOption = ({
       </TouchableHighlight>
 
       {qty > 0 && (
-        <TouchableHighlight style={styles.removeOption}>
+        <TouchableHighlight
+          onPress={() => {
+            handleRemove(id);
+          }}
+          style={styles.removeOption}>
           <View>
             <FontAwesomeIcon
               style={styles.removeOptionIcon}

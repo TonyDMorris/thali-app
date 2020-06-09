@@ -27,6 +27,30 @@ const FoodItemOptionsSelectionModal = ({foodItem, addItem}) => {
 
     setOptions([...options, {...option, qty: 1}]);
   };
+
+  const removeOption = option => {
+    for (let i = 0; i < options.length; i++) {
+      if (option.id === options[i].id) {
+        if (options[i].qty - 1 > 1) {
+          setOptions(prevItems => {
+            return [
+              ...prevItems.slice(0, i),
+              ...prevItems.slice(i + 1),
+              {...prevItems[i], qty: options[i].qty - 1},
+            ];
+          });
+        } else {
+          setOptions(prevItems => {
+            return [...prevItems.slice(0, i), ...prevItems.slice(i + 1)];
+          });
+        }
+
+        return;
+      }
+    }
+
+    setOptions([...options, {...option, qty: 1}]);
+  };
   const handleDismissModal = opts => {
     addItem({...foodItem, food_item_options: opts});
     Navigation.dismissAllModals({
@@ -60,6 +84,7 @@ const FoodItemOptionsSelectionModal = ({foodItem, addItem}) => {
               }
               totalQuantity={totalQuantity}
               addOption={addOption}
+              removeOption={removeOption}
             />
           );
         })}

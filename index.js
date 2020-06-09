@@ -4,6 +4,7 @@ import App from './App';
 import Menu from './components/menu/Menu';
 import {BasketProvider} from './components/basket/BasketContext';
 import FoodItemOptionsSelectionModal from './components/selection/FoodItemOptionsSelectionModal';
+import MenuDealOptions from './components/menu/MenuDealOptions';
 
 Navigation.registerComponent('com.myApp.Home', () => App);
 Navigation.registerComponent(
@@ -27,6 +28,17 @@ Navigation.registerComponent(
     );
   },
   () => FoodItemOptionsSelectionModal,
+);
+Navigation.registerComponent(
+  'com.myApp.MenuDealOptions',
+  () => props => {
+    return (
+      <BasketProvider>
+        <MenuDealOptions {...props} />
+      </BasketProvider>
+    );
+  },
+  () => MenuDealOptions,
 );
 Navigation.setDefaultOptions({
   statusBar: {},

@@ -20,7 +20,9 @@ const AddItem = props => {
     food_item_options,
     food_item_options_minimum_selection,
     food_item_options_maximum_selection,
+    menu_deal_options,
   } = props);
+
   const selectionNumberString = (min, max) => {
     if (min === max) {
       return `Select ${min} option${min > 1 ? 's' : ''}`;
@@ -52,6 +54,30 @@ const AddItem = props => {
                         foodItem.food_item_options_minimum_selection,
                         foodItem.food_item_options_maximum_selection,
                       ),
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      });
+    } else {
+      Navigation.showModal({
+        stack: {
+          children: [
+            {
+              component: {
+                name: 'com.myApp.MenuDealOptions',
+                passProps: {
+                  foodItem: foodItem,
+                  addItem: context.addDeal,
+                },
+                options: {
+                  modalPresentationStyle: 'overCurrentContext',
+                  topBar: {
+                    title: {
+                      text: foodItem.name,
                     },
                   },
                 },
