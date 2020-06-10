@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableHighlight} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
@@ -13,10 +13,12 @@ const FoodItemOption = ({
   qty,
   totalQuantity,
 }) => {
+  const [selected, setSelected] = useState(false);
   const handleSelect = (option, max, totalQuantity) => {
     console.log(max, totalQuantity);
     if (totalQuantity < max) {
       addOption(option);
+      setSelected(true);
     }
   };
   const handleRemove = id => {
@@ -25,7 +27,7 @@ const FoodItemOption = ({
   return (
     <View
       style={
-        qty > 0 ? {...styles.container, ...styles.selected} : styles.container
+        selected ? {...styles.container, ...styles.selected} : styles.container
       }>
       <TouchableHighlight
         style={styles.optionButton}
@@ -50,7 +52,7 @@ const FoodItemOption = ({
             <Text>
               {additional_charge > 0
                 ? `£ ${parseFloat(additional_charge).toFixed(2)}`
-                : 'FREE'}
+                : ''}
             </Text>
           </View>
         </View>

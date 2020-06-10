@@ -21,6 +21,7 @@ const AddItem = props => {
     food_item_options_minimum_selection,
     food_item_options_maximum_selection,
     menu_deal_options,
+    hasDealOptions,
   } = props);
 
   const selectionNumberString = (min, max) => {
@@ -31,11 +32,34 @@ const AddItem = props => {
     }
   };
   const handlePress = foodItem => {
-    if (foodItem.food_item_options && foodItem.food_item_options.length === 0) {
-      context.addItem(foodItem);
-    }
-
-    if (foodItem.food_item_options && foodItem.food_item_options.length > 0) {
+    if (foodItem.hasDealOptions) {
+      Navigation.showModal({
+        stack: {
+          children: [
+            {
+              component: {
+                name: 'com.myApp.MenuDealOptions',
+                passProps: {
+                  foodItem: foodItem,
+                  addItem: context.addDeal,
+                },
+                options: {
+                  modalPresentationStyle: 'overCurrentContext',
+                  topBar: {
+                    title: {
+                      text: foodItem.name,
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      });
+    } else if (
+      foodItem.food_item_options &&
+      foodItem.food_item_options.length > 0
+    ) {
       Navigation.showModal({
         stack: {
           children: [
@@ -63,29 +87,7 @@ const AddItem = props => {
         },
       });
     } else {
-      Navigation.showModal({
-        stack: {
-          children: [
-            {
-              component: {
-                name: 'com.myApp.MenuDealOptions',
-                passProps: {
-                  foodItem: foodItem,
-                  addItem: context.addDeal,
-                },
-                options: {
-                  modalPresentationStyle: 'overCurrentContext',
-                  topBar: {
-                    title: {
-                      text: foodItem.name,
-                    },
-                  },
-                },
-              },
-            },
-          ],
-        },
-      });
+      context.addItem(foodItem);
     }
   };
 

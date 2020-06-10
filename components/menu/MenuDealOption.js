@@ -1,12 +1,28 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableHighlight,
+} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSortUp, faSortDown} from '@fortawesome/free-solid-svg-icons';
 import Collapsible from 'react-native-collapsible';
-import FoodItem from './FoodItem';
-const MenuDealOption = ({foodItems, name}) => {
+import FoodItemOption from '../selection/FoodItemOption';
+const MenuDealOption = ({
+  foodItems,
+  name,
+  handleDealOption,
+  options,
+  totalQuantity,
+}) => {
   const [isCollapsed, setCollapse] = useState(true);
   const [loaded, setLoaded] = useState(false);
+  const [locked, setLocked] = useState([]);
+  const handleSetLocked = index => {
+    setLocked([...locked, index]);
+  };
   return (
     <>
       <TouchableOpacity
@@ -29,7 +45,21 @@ const MenuDealOption = ({foodItems, name}) => {
       </TouchableOpacity>
       <Collapsible style={styles.collapsible} collapsed={isCollapsed}>
         {foodItems.map(fi => {
-          return <FoodItem {...fi} isDeal />;
+          return (
+            <FoodItemOption
+              id={fi.id}
+              title={fi.name}
+              description={fi.description}
+              additional_charge={0}
+              addOption={handleDealOption}
+              removeOption={() => {
+                console.log('todo');
+              }}
+              food_item_options_maximum_selection={1}
+              qty={qty}
+              totalQuantity={totalQuantity}
+            />
+          );
         })}
       </Collapsible>
     </>
