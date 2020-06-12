@@ -1,32 +1,30 @@
 import React, {createContext, useState} from 'react';
 import {View, Text} from 'react-native';
 
-export const BasketContext = createContext({});
+const isNotduplicate = (original, additional) => {
+  const newFoodItemOptions = original.food_item_options.sort((curr, next) => {
+    return curr.id - next.id;
+  });
+  const oldFoodItemOptions = additional.food_item_options.sort((curr, next) => {
+    return curr.id - next.id;
+  });
+  const longest =
+    newFoodItemOptions.length > oldFoodItemOptions.length
+      ? newFoodItemOptions
+      : oldFoodItemOptions;
+  const shortest =
+    newFoodItemOptions.length > oldFoodItemOptions.length
+      ? oldFoodItemOptions
+      : newFoodItemOptions;
+  const isNotduplicate = longest.some((option, i) => {
+    return option.id != shortest[i].id;
+  });
+  return isNotduplicate;
+};
 export const handleFoodItems = (foodItem, items, ctxFunc) => {
   for (let i = 0; i < items.length; i++) {
     if (foodItem.id === items[i].id) {
-      const newFoodItemOptions = foodItem.food_item_options.sort(
-        (curr, next) => {
-          return curr.id - next.id;
-        },
-      );
-      const oldFoodItemOptions = items[i].food_item_options.sort(
-        (curr, next) => {
-          return curr.id - next.id;
-        },
-      );
-      const longest =
-        newFoodItemOptions.length > oldFoodItemOptions.length
-          ? newFoodItemOptions
-          : oldFoodItemOptions;
-      const shortest =
-        newFoodItemOptions.length > oldFoodItemOptions.length
-          ? oldFoodItemOptions
-          : newFoodItemOptions;
-      const isNotduplicate = longest.some((option, i) => {
-        return option.id != shortest[i].id;
-      });
-      if (isNotduplicate) {
+      if (isNotduplicate(foodItem, items[i])) {
         console.log([...items, {...foodItem, qty: 1}]);
         ctxFunc([...items, {...foodItem, qty: 1}]);
 
@@ -44,10 +42,25 @@ export const handleFoodItems = (foodItem, items, ctxFunc) => {
       }
     }
   }
-  console.log(foodItem);
+
   ctxFunc([...items, {...foodItem, qty: 1}]);
 };
+
+export const BasketContext = createContext({});
 export const BasketProvider = props => {
+  const [items, setItems] = useState([]);
+
+  const addItem = foodItem => {
+    handleFoodItems(foodItem, items, setItems);
+  };
+  return (
+    <BasketContext.Provider value={{items: items, addItem}}>
+      {props.children}
+    </BasketContext.Provider>
+  );
+};
+
+export const DealProvider = props => {
   const [items, setItems] = useState([]);
 
   const addItem = foodItem => {
