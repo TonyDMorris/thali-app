@@ -7,15 +7,54 @@ import {
   ScrollView,
   Button,
 } from 'react-native';
+import MenuDealOption from './MenuDealOption';
 
 const MenuDealOptions = ({foodItem}) => {
+  const [selections, setSelections] = useState({});
+  const setDeal = (options, index) => {
+    setSelections(prevSelections => {
+      prevSelections[index] = options;
+      console.log(prevSelections);
+      return {...prevSelections};
+    });
+  };
+  const isValidSelection = (selections, foodItem) => {
+    for (let i = 0; i < foodItem.menu_deal_options.length; i++) {
+      if (
+        !selections[i] ||
+        selections[i].options.length !==
+          foodItem.menu_deal_options[i].number_of_selections
+      ) {
+        return false;
+      }
+    }
+    return true;
+  };
   return (
     <ImageBackground
       style={styles.backgroundImage}
       source={require('../../assets/images/Mumbai_Dabbawala_or_Tiffin_Wallahs-_200,000_Tiffin_Boxes_Delivered_Per_Day.jpg')}>
       <View style={styles.scrollView}>
-        <ScrollView />
-        <Button title="ok" />
+        <ScrollView>
+          {foodItem.menu_deal_options.map((opt, index) => {
+            return (
+              <MenuDealOption
+                dealOptionIndex={index}
+                key={opt.id}
+                title={opt.selection_text}
+                number_of_selections={opt.number_of_selections}
+                food_items={opt.food_items}
+                setDeal={setDeal}
+              />
+            );
+          })}
+        </ScrollView>
+        <Button
+          disabled={
+            selections && isValidSelection(selections, foodItem) ? false : true
+          }
+          title="ok"
+        />
       </View>
     </ImageBackground>
   );

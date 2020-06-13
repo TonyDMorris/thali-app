@@ -1,15 +1,10 @@
-import React, {useState, useContext} from 'react';
-import {
-  Button,
-  TouchableOpacity,
-  TouchableHighlight,
-  TouchableHighlightBase,
-} from 'react-native';
+import React, {useState} from 'react';
+import {TouchableOpacity} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import FoodItem from './FoodItem';
 import DealItem from './DealItem';
 import {StyleSheet, Text, View} from 'react-native';
-import {BasketProvider} from '../basket/BasketContext';
+
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSortUp, faSortDown} from '@fortawesome/free-solid-svg-icons';
 const Category = ({name, food_items, menu_deals}) => {

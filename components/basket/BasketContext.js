@@ -24,7 +24,8 @@ const isNotduplicate = (original, additional) => {
 export const handleFoodItems = (foodItem, items, ctxFunc) => {
   for (let i = 0; i < items.length; i++) {
     if (foodItem.id === items[i].id) {
-      if (false) {
+      if (isNotduplicate(items[i], foodItem)) {
+        console.log('here');
         ctxFunc([...items, {...foodItem, qty: 1}]);
 
         return;
@@ -45,15 +46,23 @@ export const handleFoodItems = (foodItem, items, ctxFunc) => {
   ctxFunc([...items, {...foodItem, qty: 1}]);
 };
 
+export const handleDealItems = (dealItem, dealItems, ctxFunc) => {};
+
 export const BasketContext = createContext({});
 export const BasketProvider = props => {
   const [items, setItems] = useState([]);
+  const [dealItems, setDealItems] = useState([]);
 
   const addItem = foodItem => {
     handleFoodItems(foodItem, items, setItems);
   };
+
+  const addDealItem = dealItem => {
+    handleDealItems(dealItem, dealItems, setDealItems);
+  };
   return (
-    <BasketContext.Provider value={{items: items, addItem}}>
+    <BasketContext.Provider
+      value={{dealItems: dealItems, items: items, addItem, addDealItem}}>
       {props.children}
     </BasketContext.Provider>
   );
