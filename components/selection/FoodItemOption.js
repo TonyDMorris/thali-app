@@ -23,6 +23,7 @@ const FoodItemOption = ({
   };
   const handleRemove = id => {
     removeOption({id});
+    setSelected(false);
   };
   return (
     <View
@@ -58,7 +59,7 @@ const FoodItemOption = ({
         </View>
       </TouchableHighlight>
 
-      {qty > 0 && (
+      {selected && (
         <TouchableHighlight
           onPress={() => {
             handleRemove(id);

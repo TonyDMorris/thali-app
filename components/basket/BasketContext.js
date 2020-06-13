@@ -24,8 +24,7 @@ const isNotduplicate = (original, additional) => {
 export const handleFoodItems = (foodItem, items, ctxFunc) => {
   for (let i = 0; i < items.length; i++) {
     if (foodItem.id === items[i].id) {
-      if (isNotduplicate(foodItem, items[i])) {
-        console.log([...items, {...foodItem, qty: 1}]);
+      if (false) {
         ctxFunc([...items, {...foodItem, qty: 1}]);
 
         return;

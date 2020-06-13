@@ -7,40 +7,14 @@ import {
   ScrollView,
   Button,
 } from 'react-native';
-import MenuDealOption from './MenuDealOption';
-import {handleFoodItems} from '../basket/BasketContext';
-const MenuDealOptions = ({foodItem}) => {
-  const [options, setOptions] = useState([]);
-  const handleDealOption = option => {
-    handleFoodItems(option, options, setOptions);
-  };
 
-  const totalQuantity = options.reduce((acc, curr) => {
-    acc += curr.qty;
-    return acc;
-  }, 0);
+const MenuDealOptions = ({foodItem}) => {
   return (
     <ImageBackground
       style={styles.backgroundImage}
       source={require('../../assets/images/Mumbai_Dabbawala_or_Tiffin_Wallahs-_200,000_Tiffin_Boxes_Delivered_Per_Day.jpg')}>
       <View style={styles.scrollView}>
-        <ScrollView>
-          {foodItem.menu_deal_options.map(opt => {
-            arr = [...new Array(opt.number_of_selections)];
-            return arr.map((nil, i) => {
-              return (
-                <MenuDealOption
-                  totalQuantity={totalQuantity}
-                  handleDealOption={handleDealOption}
-                  key={`${opt.id}${i}`}
-                  name={`${opt.selection_text} ${i + 1}`}
-                  foodItems={opt.food_items}
-                  options={options}
-                />
-              );
-            });
-          })}
-        </ScrollView>
+        <ScrollView />
         <Button title="ok" />
       </View>
     </ImageBackground>
