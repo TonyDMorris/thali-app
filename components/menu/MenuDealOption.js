@@ -9,7 +9,6 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSortUp, faSortDown} from '@fortawesome/free-solid-svg-icons';
 import Collapsible from 'react-native-collapsible';
-import MenuDealOptionItem from './MenuDealOptionItem';
 
 const MenuDealOption = () => {
   const [isCollapsed, setCollapse] = useState(true);
