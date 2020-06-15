@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
@@ -7,15 +7,29 @@ import {
   ScrollView,
   Button,
 } from 'react-native';
+import {Navigation} from 'react-native-navigation';
+import {BasketContext} from '../basket/BasketContext';
 import MenuDealOption from './MenuDealOption';
 
-const MenuDealOptions = ({foodItem}) => {
+const MenuDealOptions = ({foodItem, addDealItem}) => {
   const [selections, setSelections] = useState({});
+
   const setDeal = (options, index) => {
     setSelections(prevSelections => {
       prevSelections[index] = options;
       console.log(prevSelections);
       return {...prevSelections};
+    });
+  };
+
+  const handleDismissModal = dealItem => {
+    addDealItem(dealItem);
+    Navigation.dismissAllModals({
+      animations: {
+        dismissModal: {
+          enable: false,
+        },
+      },
     });
   };
   const isValidSelection = (selections, foodItem) => {
@@ -50,6 +64,13 @@ const MenuDealOptions = ({foodItem}) => {
           })}
         </ScrollView>
         <Button
+          onPress={() => {
+            handleDismissModal({
+              ...foodItem,
+              menu_deal_options: selections,
+              qty: 1,
+            });
+          }}
           disabled={
             selections && isValidSelection(selections, foodItem) ? false : true
           }

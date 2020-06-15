@@ -1,5 +1,4 @@
 import React, {createContext, useState} from 'react';
-import {View, Text} from 'react-native';
 
 const isNotduplicate = (original, additional) => {
   const newFoodItemOptions = original.food_item_options.sort((curr, next) => {
@@ -46,7 +45,12 @@ export const handleFoodItems = (foodItem, items, ctxFunc) => {
   ctxFunc([...items, {...foodItem, qty: 1}]);
 };
 
-export const handleDealItems = (dealItem, dealItems, ctxFunc) => {};
+export const handleDealItems = (dealItem, dealItems, ctxFunc) => {
+  ctxFunc(prevOptions => {
+    prevOptions.push(dealItem);
+    return [...prevOptions];
+  });
+};
 
 export const BasketContext = createContext({});
 export const BasketProvider = props => {
@@ -58,24 +62,12 @@ export const BasketProvider = props => {
   };
 
   const addDealItem = dealItem => {
+    console.log(dealItem);
     handleDealItems(dealItem, dealItems, setDealItems);
   };
   return (
     <BasketContext.Provider
       value={{dealItems: dealItems, items: items, addItem, addDealItem}}>
-      {props.children}
-    </BasketContext.Provider>
-  );
-};
-
-export const DealProvider = props => {
-  const [items, setItems] = useState([]);
-
-  const addItem = foodItem => {
-    handleFoodItems(foodItem, items, setItems);
-  };
-  return (
-    <BasketContext.Provider value={{items: items, addItem}}>
       {props.children}
     </BasketContext.Provider>
   );

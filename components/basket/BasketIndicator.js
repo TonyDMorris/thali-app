@@ -7,17 +7,25 @@ import {BasketContext} from './BasketContext';
 
 const BasketIndicator = () => {
   const context = useContext(BasketContext);
-  const {totalPrice, totalItems} = context.items.reduce(
-    (acc, curr) => {
-      acc.totalItems += curr.qty;
-      acc.totalPrice += curr.price * curr.qty;
-      return acc;
-    },
-    {
-      totalPrice: 0,
-      totalItems: 0,
-    },
-  );
+
+  const getTotalPriceAndQuantitiy = items => {
+    return items.reduce(
+      (acc, curr) => {
+        acc.totalItems += curr.qty;
+        acc.totalPrice += curr.price * curr.qty;
+        return acc;
+      },
+      {
+        totalPrice: 0,
+        totalItems: 0,
+      },
+    );
+  };
+  const dealTotals = getTotalPriceAndQuantitiy(context.dealItems);
+  const foodItemTotals = getTotalPriceAndQuantitiy(context.items);
+  const totalPrice = dealTotals.totalPrice + foodItemTotals.totalPrice;
+  const totalItems = dealTotals.totalItems + foodItemTotals.totalItems;
+
   return (
     <TouchableOpacity style={styles.basket}>
       <View style={styles.counter}>

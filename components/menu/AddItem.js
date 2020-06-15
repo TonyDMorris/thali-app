@@ -41,7 +41,7 @@ const AddItem = props => {
                 name: 'com.myApp.MenuDealOptions',
                 passProps: {
                   foodItem: foodItem,
-                  addItem: context.addDeal,
+                  addDealItem: context.addDealItem,
                 },
                 options: {
                   modalPresentationStyle: 'overCurrentContext',
