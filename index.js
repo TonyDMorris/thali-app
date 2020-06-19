@@ -5,6 +5,7 @@ import Menu from './components/menu/Menu';
 import {BasketProvider} from './components/basket/BasketContext';
 import FoodItemOptionsSelectionModal from './components/selection/FoodItemOptionsSelectionModal';
 import MenuDealOptions from './components/menu/MenuDealOptions';
+import BasketCheckout from './components/basket/BasketCheckout';
 
 Navigation.registerComponent('com.myApp.Home', () => App);
 Navigation.registerComponent(
@@ -39,6 +40,17 @@ Navigation.registerComponent(
     );
   },
   () => MenuDealOptions,
+);
+Navigation.registerComponent(
+  'com.myApp.BasketCheckout',
+  () => props => {
+    return (
+      <BasketProvider>
+        <BasketCheckout {...props} />
+      </BasketProvider>
+    );
+  },
+  () => Menu,
 );
 Navigation.setDefaultOptions({
   statusBar: {},

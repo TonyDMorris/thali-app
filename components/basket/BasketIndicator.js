@@ -1,13 +1,38 @@
 import React, {useContext} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+  TouchableNativeFeedback,
+  TouchableHighlight,
+} from 'react-native';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faShoppingCart} from '@fortawesome/free-solid-svg-icons';
 import {BasketContext} from './BasketContext';
+import {Navigation} from 'react-native-navigation';
 
 const BasketIndicator = () => {
   const context = useContext(BasketContext);
-
+  const handlePress = () => {
+    Navigation.showModal({
+      stack: {
+        children: [
+          {
+            component: {
+              name: 'com.myApp.BasketCheckout',
+              options: {
+                modalPresentationStyle: 'overCurrentContext',
+              },
+              passProps: {items: context.items, dealItems: context.dealItems},
+            },
+          },
+        ],
+      },
+    });
+  };
   const getTotalPriceAndQuantitiy = items => {
     return items.reduce(
       (acc, curr) => {
@@ -27,16 +52,18 @@ const BasketIndicator = () => {
   const totalItems = dealTotals.totalItems + foodItemTotals.totalItems;
 
   return (
-    <TouchableOpacity style={styles.basket}>
-      <View style={styles.counter}>
-        <Text style={styles.counterText}>{totalItems}</Text>
+    <TouchableOpacity activeOpacity={0.7} onPress={handlePress}>
+      <View style={styles.basket}>
+        <View style={styles.counter}>
+          <Text style={styles.counterText}>{totalItems}</Text>
+        </View>
+        <FontAwesomeIcon
+          style={styles.basketIcon}
+          size={40}
+          icon={faShoppingCart}
+        />
+        <Text style={styles.price}> £ {parseFloat(totalPrice).toFixed(2)}</Text>
       </View>
-      <FontAwesomeIcon
-        style={styles.basketIcon}
-        size={40}
-        icon={faShoppingCart}
-      />
-      <Text style={styles.price}> £ {parseFloat(totalPrice).toFixed(2)}</Text>
     </TouchableOpacity>
   );
 };
