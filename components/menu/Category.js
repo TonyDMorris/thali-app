@@ -7,9 +7,9 @@ import {StyleSheet, Text, View} from 'react-native';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSortUp, faSortDown} from '@fortawesome/free-solid-svg-icons';
-const Category = ({name, food_items, menu_deals}) => {
-  const [isCollapsed, setCollapse] = useState(true);
-  const [loaded, setLoaded] = useState(false);
+const Category = ({name, food_items, menu_deals, shouldBeCollapsed}) => {
+  const [isCollapsed, setCollapse] = useState(shouldBeCollapsed);
+  const [loaded, setLoaded] = useState(!shouldBeCollapsed);
   return (
     <>
       <TouchableOpacity

@@ -24,7 +24,11 @@ const BasketIndicator = () => {
             component: {
               name: 'com.myApp.BasketCheckout',
               options: {
-                modalPresentationStyle: 'overCurrentContext',
+                modalPresentationStyle: 'none',
+                topBar: {
+                  title: {text: 'Checkout', alignment: 'center'},
+                  leftButtons: {},
+                },
               },
               passProps: {items: context.items, dealItems: context.dealItems},
             },

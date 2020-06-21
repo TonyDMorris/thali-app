@@ -10,20 +10,12 @@ import {
 } from 'react-native';
 import BasketIndicator from '../basket/BasketIndicator';
 
-const Menu = ({categories}) => {
-  const context = useContext(BasketContext);
-  const baseURL = 'https://api.towidomo.dev';
-  const resaurantId = '1';
-  const [content, setContent] = useState(false);
+const Menu = props => {
+  const [menu, setMenu] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(`${baseURL}/restaurants/${resaurantId}`);
-      const json = await response.json();
-
-      setContent(json[0]);
-    }
-    fetchData();
+    const {content} = props;
+    setMenu(content);
   }, []);
   return (
     <ImageBackground
@@ -31,9 +23,17 @@ const Menu = ({categories}) => {
       source={require('../../assets/images/52854544_2221519711246258_720619186404982784_o.jpg')}>
       <View style={styles.scrollView}>
         <ScrollView>
-          {content &&
-            content.menu_categories.map(cat => {
-              return <Category key={cat.id} {...cat} />;
+          {menu &&
+            menu.menu_categories.map((cat, i) => {
+              if (i === 0) {
+                return (
+                  <Category key={cat.id} {...cat} shouldBeCollapsed={false} />
+                );
+              } else {
+                return (
+                  <Category key={cat.id} {...cat} shouldBeCollapsed={true} />
+                );
+              }
             })}
         </ScrollView>
         <BasketIndicator />

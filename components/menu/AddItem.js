@@ -102,13 +102,11 @@ const AddItem = props => {
   );
 };
 
-export default AddItem;
-
 const styles = StyleSheet.create({
   container: {
     padding: 5,
     borderRadius: 10,
-    backgroundColor: 'goldenrod',
+    backgroundColor: 'mediumseagreen',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -120,3 +118,5 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 });
+
+export default AddItem;

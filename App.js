@@ -21,6 +21,19 @@ import {
 import {Navigation} from 'react-native-navigation';
 
 const App = props => {
+  const baseURL = 'https://api.towidomo.dev';
+  const resaurantId = '1';
+  const [content, setContent] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`${baseURL}/restaurants/${resaurantId}`);
+      const json = await response.json();
+
+      setContent(json[0]);
+    }
+    fetchData();
+  }, []);
   return (
     <>
       <SafeAreaView>
@@ -43,6 +56,7 @@ const App = props => {
                   Navigation.push(props.componentId, {
                     component: {
                       name: 'com.myApp.Menu',
+                      passProps: {content},
                       options: {},
                     },
                   })
