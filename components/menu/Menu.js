@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react';
 import Category from './Category';
-import {BasketContext} from '../basket/BasketContext';
+
 import {
   ScrollView,
   View,

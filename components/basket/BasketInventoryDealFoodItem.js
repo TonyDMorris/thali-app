@@ -1,19 +1,17 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-const BasketInventoryItem = ({qty, name, food_item_options, price}) => {
+const BasketInventoryDealFoodItem = ({qty, name, food_item_options, price}) => {
   return (
     <View style={styles.container}>
       <View style={styles.nameAndPrice}>
-        <Text style={styles.name}>{name}</Text>
-
-        <Text>{`${qty} x     £ ${parseFloat(price).toFixed(2)}`}</Text>
+        <Text style={styles.name}>- {name}</Text>
       </View>
       <View style={styles.options}>
         {food_item_options &&
           food_item_options.map(option => {
             return (
-              <Text key={option.id}>{`- ${option.title}        ${
+              <Text>{`- ${option.title}        ${
                 option.qty > 1 ? option.qty : ''
               }`}</Text>
             );
@@ -23,7 +21,7 @@ const BasketInventoryItem = ({qty, name, food_item_options, price}) => {
   );
 };
 
-export default BasketInventoryItem;
+export default BasketInventoryDealFoodItem;
 
 const styles = StyleSheet.create({
   container: {width: '100%'},

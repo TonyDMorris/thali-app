@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import BasketInventoryDealFoodItem from './BasketInventoryDealFoodItem';
 
-const BasketInventoryItem = ({qty, name, food_item_options, price}) => {
+const BasketInventoryDealItem = ({name, menu_deal_options, price, qty}) => {
   return (
     <View style={styles.container}>
       <View style={styles.nameAndPrice}>
@@ -10,24 +11,21 @@ const BasketInventoryItem = ({qty, name, food_item_options, price}) => {
         <Text>{`${qty} x     £ ${parseFloat(price).toFixed(2)}`}</Text>
       </View>
       <View style={styles.options}>
-        {food_item_options &&
-          food_item_options.map(option => {
+        {menu_deal_options.map(({options}) => {
+          return options.map(foodItem => {
             return (
-              <Text key={option.id}>{`- ${option.title}        ${
-                option.qty > 1 ? option.qty : ''
-              }`}</Text>
+              <BasketInventoryDealFoodItem key={foodItem.id} {...foodItem} />
             );
-          })}
+          });
+        })}
       </View>
     </View>
   );
 };
-
-export default BasketInventoryItem;
-
 const styles = StyleSheet.create({
   container: {width: '100%'},
   nameAndPrice: {justifyContent: 'space-between', flexDirection: 'row'},
   name: {maxWidth: '50%'},
   options: {marginLeft: 20},
 });
+export default BasketInventoryDealItem;

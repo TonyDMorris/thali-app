@@ -11,6 +11,8 @@ import {
   Button,
   TouchableHighlight,
 } from 'react-native';
+import BasketInventoryItem from './BasketInventoryItem';
+import BasketInventoryDealItem from './BasketInventoryDealItem';
 
 const BasketCheckout = ({dealItems, items}) => {
   return (
@@ -25,16 +27,16 @@ const BasketCheckout = ({dealItems, items}) => {
       </View>
 
       <View style={styles.content}>
-        <View style={styles.orderTextBox}>
-          <Text style={styles.orderText}>{`Your order from \n Thali`}</Text>
-        </View>
         <ScrollView style={styles.order}>
-          <Text>1</Text>
-          <Text>1</Text>
-          <Text>1</Text>
-          <Text>1</Text>
-          <Text>1</Text>
-          <Text>1</Text>
+          <View style={styles.orderTextBox}>
+            <Text style={styles.orderText}>{`Your order from \n Thali`}</Text>
+          </View>
+          {dealItems.map(item => {
+            return <BasketInventoryDealItem key={item.id} {...item} />;
+          })}
+          {items.map(item => {
+            return <BasketInventoryItem key={item.id} {...item} />;
+          })}
         </ScrollView>
         <View style={styles.totals}>
           <View style={styles.total}>
@@ -46,7 +48,7 @@ const BasketCheckout = ({dealItems, items}) => {
             <Text>£0.00</Text>
           </View>
           <View style={styles.total}>
-            <Text>Total(incl VAT.)</Text>
+            <Text>Total</Text>
             <Text>£0.00</Text>
           </View>
         </View>
@@ -83,8 +85,24 @@ styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'stretch',
   },
-  orderText: {textAlign: 'center', fontSize: 14},
-  order: {height: 100},
+  orderText: {
+    textAlign: 'center',
+    fontSize: 14,
+    borderBottomWidth: 0.5,
+    borderColor: 'silver',
+    marginBottom: 5,
+    padding: 5,
+  },
+  order: {
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    height: 100,
+    width: '100%',
+    alignSelf: 'center',
+    borderBottomWidth: 0.5,
+    borderColor: 'silver',
+    marginBottom: 5,
+  },
   totals: {
     width: '90%',
     borderRadius: 5,

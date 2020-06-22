@@ -84,7 +84,7 @@ const MenuDealOptionSet = ({food_items, title, index, addOption}) => {
                 key={fi.id}>
                 <View style={styles.titleDescriptionContainer}>
                   <Text style={styles.title}>{fi.name}</Text>
-                  <Text style={styles.description}>{description}</Text>
+                  <Text style={styles.description}>{fi.description}</Text>
                 </View>
               </TouchableHighlight>
             );

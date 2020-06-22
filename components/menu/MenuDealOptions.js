@@ -12,13 +12,13 @@ import {BasketContext} from '../basket/BasketContext';
 import MenuDealOption from './MenuDealOption';
 
 const MenuDealOptions = ({foodItem, addDealItem}) => {
-  const [selections, setSelections] = useState({});
+  const [selections, setSelections] = useState([]);
 
   const setDeal = (options, index) => {
     setSelections(prevSelections => {
       prevSelections[index] = options;
-      console.log(prevSelections);
-      return {...prevSelections};
+
+      return [...prevSelections];
     });
   };
 
