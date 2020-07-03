@@ -17,7 +17,7 @@
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-collapsible": "^1.5.2",
-    "react-native-gpay": "^1.0.3",
+    "react-native-google-pay": "^2.1.0",
     "react-native-navigation": "^6.7.1",
     "react-native-svg": "^12.1.0"
   },

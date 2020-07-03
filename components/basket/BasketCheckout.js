@@ -13,6 +13,54 @@ import {
 } from 'react-native';
 import BasketInventoryItem from './BasketInventoryItem';
 import BasketInventoryDealItem from './BasketInventoryDealItem';
+import {GooglePay} from 'react-native-google-pay';
+
+const handlePay = () => {
+  const allowedCardNetworks = ['VISA', 'MASTERCARD'];
+  const allowedCardAuthMethods = ['PAN_ONLY', 'CRYPTOGRAM_3DS'];
+
+  const requestData = {
+    cardPaymentMethod: {
+      tokenizationSpecification: {
+        type: 'PAYMENT_GATEWAY',
+
+        gateway: 'stripe',
+        gatewayMerchantId: 'thali',
+        stripe: {
+          publishableKey:
+            'pk_test_51H0Rn9A5cyq20WwH1ZifHxKJdSCRni4BX1NwnDWzgnCW7hnK81Z2Ie2LlLdb7Cp9foY4Y3rjQfdj30VZMgCfvK2w00synDt5JP',
+          version: '2020-03-02',
+        },
+      },
+      allowedCardNetworks,
+      allowedCardAuthMethods,
+    },
+    transaction: {
+      totalPrice: '10',
+      totalPriceStatus: 'FINAL',
+      currencyCode: 'GBP',
+    },
+    merchantName: 'Example Merchant',
+  };
+
+  // Set the environment before the payment request
+  GooglePay.setEnvironment(GooglePay.ENVIRONMENT_TEST);
+
+  // Check if Google Pay is available
+  return GooglePay.isReadyToPay(
+    allowedCardNetworks,
+    allowedCardAuthMethods,
+  ).then(ready => {
+    if (ready) {
+      // Request payment token
+      GooglePay.requestPayment(requestData)
+        .then(token => {
+          console.log(token);
+        })
+        .catch(error => console.log(error.code, error.message));
+    }
+  });
+};
 
 const BasketCheckout = ({dealItems, items}) => {
   return (
@@ -60,7 +108,12 @@ const BasketCheckout = ({dealItems, items}) => {
           </View>
         </View>
         <View style={styles.orderButton}>
-          <Button color="#0398aa" raised={true} title="Checkout" />
+          <Button
+            onPress={handlePay}
+            color="#0398aa"
+            raised={true}
+            title="Checkout"
+          />
         </View>
       </View>
     </ImageBackground>
