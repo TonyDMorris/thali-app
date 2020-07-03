@@ -31,11 +31,18 @@ const BasketCheckout = ({dealItems, items}) => {
           <View style={styles.orderTextBox}>
             <Text style={styles.orderText}>{`Your order from \n Thali`}</Text>
           </View>
-          {dealItems.map(item => {
-            return <BasketInventoryDealItem key={item.id} {...item} />;
+          {dealItems.map((item, index) => {
+            return (
+              <BasketInventoryDealItem
+                key={`${item.id}${index}deal`}
+                {...item}
+              />
+            );
           })}
-          {items.map(item => {
-            return <BasketInventoryItem key={item.id} {...item} />;
+          {items.map((item, index) => {
+            return (
+              <BasketInventoryItem key={`${item.id}${index}food`} {...item} />
+            );
           })}
         </ScrollView>
         <View style={styles.totals}>
@@ -53,14 +60,17 @@ const BasketCheckout = ({dealItems, items}) => {
           </View>
         </View>
         <View style={styles.orderButton}>
-          <Button color="#0398aa" raised={true} title="order" />
+          <Button color="#0398aa" raised={true} title="Checkout" />
         </View>
       </View>
     </ImageBackground>
   );
 };
 styles = StyleSheet.create({
-  container: {height: '100%', width: '100%'},
+  container: {
+    height: '100%',
+    width: '100%',
+  },
   topLogo: {backgroundColor: '#0398aa', height: 100, zIndex: 1},
   topLogoImage: {
     width: Dimensions.get('window').width - 250,

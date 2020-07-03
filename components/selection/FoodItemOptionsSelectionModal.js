@@ -4,7 +4,7 @@ import {BasketContext} from '../basket/BasketContext';
 import {Navigation} from 'react-native-navigation';
 import FoodItemOption from './FoodItemOption';
 
-const FoodItemOptionsSelectionModal = ({foodItem, addItem}) => {
+const FoodItemOptionsSelectionModal = ({foodItem, addItem, componentId}) => {
   const [options, setOptions] = useState([]);
   const totalQuantity = options.reduce((acc, curr) => {
     acc += curr.qty;
@@ -31,35 +31,16 @@ const FoodItemOptionsSelectionModal = ({foodItem, addItem}) => {
   const removeOption = option => {
     for (let i = 0; i < options.length; i++) {
       if (option.id === options[i].id) {
-        if (options[i].qty - 1 > 1) {
-          setOptions(prevItems => {
-            return [
-              ...prevItems.slice(0, i),
-              ...prevItems.slice(i + 1),
-              {...prevItems[i], qty: options[i].qty - 1},
-            ];
-          });
-        } else {
-          setOptions(prevItems => {
-            return [...prevItems.slice(0, i), ...prevItems.slice(i + 1)];
-          });
-        }
-
-        return;
+        setOptions(prevItems => {
+          return [...prevItems.slice(0, i), ...prevItems.slice(i + 1)];
+        });
       }
     }
-
-    setOptions([...options, {...option, qty: 1}]);
   };
   const handleDismissModal = opts => {
     addItem({...foodItem, food_item_options: opts});
-    Navigation.dismissAllModals({
-      animations: {
-        dismissModal: {
-          enable: false,
-        },
-      },
-    });
+
+    Navigation.dismissModal(componentId);
   };
   return (
     <ImageBackground

@@ -12,9 +12,12 @@ const BasketInventoryDealItem = ({name, menu_deal_options, price, qty}) => {
       </View>
       <View style={styles.options}>
         {menu_deal_options.map(({options}) => {
-          return options.map(foodItem => {
+          return options.map((foodItem, index) => {
             return (
-              <BasketInventoryDealFoodItem key={foodItem.id} {...foodItem} />
+              <BasketInventoryDealFoodItem
+                key={`${foodItem.id}${index}`}
+                {...foodItem}
+              />
             );
           });
         })}

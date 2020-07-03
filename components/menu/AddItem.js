@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import {BasketContext} from '../basket/BasketContext';
 import {Navigation} from 'react-native-navigation';
+import {selectionNumberString} from '../../utils/utils';
 
 const AddItem = props => {
   const context = useContext(BasketContext);
@@ -24,13 +25,6 @@ const AddItem = props => {
     hasDealOptions,
   } = props);
 
-  const selectionNumberString = (min, max) => {
-    if (min === max) {
-      return `Select ${min} option${min > 1 ? 's' : ''}`;
-    } else {
-      `Select between ${min} and ${max} options`;
-    }
-  };
   const handlePress = foodItem => {
     if (foodItem.hasDealOptions) {
       Navigation.showModal({

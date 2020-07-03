@@ -10,13 +10,22 @@ const FoodItemOption = ({
   addOption,
   removeOption,
   food_item_options_maximum_selection,
+  max_permitted,
   qty,
   totalQuantity,
 }) => {
   const [selected, setSelected] = useState(false);
-  const handleSelect = (option, max, totalQuantity) => {
-    console.log(max, totalQuantity);
-    if (totalQuantity < max) {
+  const handleSelect = (
+    option,
+    max,
+    totalQuantity,
+    maxPermitted,
+    currentQty,
+  ) => {
+    console.log(`name ==> ${option.title} 
+    current qty =>> ${currentQty}
+    max permitted ==> ${maxPermitted}`);
+    if (totalQuantity < max && currentQty < (maxPermitted || 1)) {
       addOption(option);
       setSelected(true);
     }
@@ -37,6 +46,8 @@ const FoodItemOption = ({
             {id, title, additional_charge},
             food_item_options_maximum_selection,
             totalQuantity,
+            max_permitted,
+            qty,
           );
         }}>
         <View style={styles.optionContainer}>

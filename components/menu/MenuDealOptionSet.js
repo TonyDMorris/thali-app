@@ -1,15 +1,22 @@
 import React, {useState} from 'react';
-import {TouchableOpacity, TouchableHighlight} from 'react-native';
+import {Navigation} from 'react-native-navigation';
 import Collapsible from 'react-native-collapsible';
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TouchableHighlight,
+} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSortUp, faSortDown} from '@fortawesome/free-solid-svg-icons';
-
+import {selectionNumberString} from '../../utils/utils';
 const MenuDealOptionSet = ({food_items, title, index, addOption}) => {
   const [isCollapsed, setCollapse] = useState(true);
   const [loaded, setLoaded] = useState(false);
   const [option, setOption] = useState({});
   const handleSelect = (fi, index) => {
+    console.log(fi);
     if (fi.food_item_options && fi.food_item_options.length > 0) {
       Navigation.showModal({
         stack: {
@@ -29,8 +36,8 @@ const MenuDealOptionSet = ({food_items, title, index, addOption}) => {
                   topBar: {
                     title: {
                       text: selectionNumberString(
-                        foodItem.food_item_options_minimum_selection,
-                        foodItem.food_item_options_maximum_selection,
+                        fi.food_item_options_minimum_selection,
+                        fi.food_item_options_maximum_selection,
                       ),
                     },
                   },

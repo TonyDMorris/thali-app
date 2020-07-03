@@ -9,9 +9,9 @@ const BasketInventoryDealFoodItem = ({qty, name, food_item_options, price}) => {
       </View>
       <View style={styles.options}>
         {food_item_options &&
-          food_item_options.map(option => {
+          food_item_options.map((option, index) => {
             return (
-              <Text>{`- ${option.title}        ${
+              <Text key={`${option.id}${index}`}>{`- ${option.title}        ${
                 option.qty > 1 ? option.qty : ''
               }`}</Text>
             );

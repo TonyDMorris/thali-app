@@ -1,6 +1,8 @@
 import React, {createContext, useState} from 'react';
 
 const isNotduplicate = (original, additional) => {
+  console.log(`original === > ${original}
+ additional ===> ${additional}`);
   const newFoodItemOptions = original.food_item_options.sort((curr, next) => {
     return curr.id - next.id;
   });
@@ -62,7 +64,6 @@ export const BasketProvider = props => {
   };
 
   const addDealItem = dealItem => {
-    console.log(dealItem);
     handleDealItems(dealItem, dealItems, setDealItems);
   };
   return (
