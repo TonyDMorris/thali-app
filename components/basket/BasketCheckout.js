@@ -19,26 +19,47 @@ const handlePay = () => {
   const allowedCardNetworks = ['VISA', 'MASTERCARD'];
   const allowedCardAuthMethods = ['PAN_ONLY', 'CRYPTOGRAM_3DS'];
 
+  // const requestData = {
+  //   cardPaymentMethod: {
+  //     tokenizationSpecification: {
+  //       type: 'PAYMENT_GATEWAY',
+
+  //       gateway: 'stripe',
+  //       // gatewayMerchantId: '12345678901234567890',
+  //       stripe: {
+  //         publishableKey:
+  //           'pk_test_51H0Rn9A5cyq20WwH1ZifHxKJdSCRni4BX1NwnDWzgnCW7hnK81Z2Ie2LlLdb7Cp9foY4Y3rjQfdj30VZMgCfvK2w00synDt5JP',
+  //         version: '2020-03-02',
+  //       },
+  //     },
+  //     allowedCardNetworks,
+  //     allowedCardAuthMethods,
+  //   },
+  //   transaction: {
+  //     totalPrice: '10',
+  //     totalPriceStatus: 'FINAL',
+  //     currencyCode: 'GBP',
+  //   },
+  //   merchantName: 'stripe',
+  // };
   const requestData = {
     cardPaymentMethod: {
       tokenizationSpecification: {
         type: 'PAYMENT_GATEWAY',
-
         gateway: 'stripe',
-        gatewayMerchantId: 'thali',
+        gatewayMerchantId: '',
         stripe: {
-          publishableKey:
-            'pk_test_51H0Rn9A5cyq20WwH1ZifHxKJdSCRni4BX1NwnDWzgnCW7hnK81Z2Ie2LlLdb7Cp9foY4Y3rjQfdj30VZMgCfvK2w00synDt5JP',
-          version: '2020-03-02',
+          publishableKey: 'pk_test_TYooMQauvdEDq54NiTphI7jx',
+          version: '2018-11-08',
         },
       },
       allowedCardNetworks,
       allowedCardAuthMethods,
     },
     transaction: {
-      totalPrice: '10',
+      totalPrice: '123',
       totalPriceStatus: 'FINAL',
-      currencyCode: 'GBP',
+      currencyCode: 'RUB',
     },
     merchantName: 'Example Merchant',
   };
@@ -47,19 +68,19 @@ const handlePay = () => {
   GooglePay.setEnvironment(GooglePay.ENVIRONMENT_TEST);
 
   // Check if Google Pay is available
-  return GooglePay.isReadyToPay(
-    allowedCardNetworks,
-    allowedCardAuthMethods,
-  ).then(ready => {
-    if (ready) {
-      // Request payment token
-      GooglePay.requestPayment(requestData)
-        .then(token => {
-          console.log(token);
-        })
-        .catch(error => console.log(error.code, error.message));
-    }
-  });
+  GooglePay.isReadyToPay(allowedCardNetworks, allowedCardAuthMethods).then(
+    ready => {
+      console.log(ready);
+      if (ready) {
+        // Request payment token
+        return GooglePay.requestPayment(requestData)
+          .then(token => {
+            console.log(token);
+          })
+          .catch(error => console.log(error, error.message));
+      }
+    },
+  );
 };
 
 const BasketCheckout = ({dealItems, items}) => {
