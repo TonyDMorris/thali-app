@@ -1,6 +1,5 @@
 package com.takeaway_app;
 
-import com.busfor.RNGooglePayPackage;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -10,7 +9,7 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.facebook.react.ReactPackage;
-
+import com.gettipsi.stripe.StripeReactPackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -26,7 +25,9 @@ public class MainApplication extends NavigationApplication {
     protected List<ReactPackage> getPackages() {
       @SuppressWarnings("UnnecessaryLocalVariable")
       List<ReactPackage> packages = new PackageList(this).getPackages();
-//      packages.add(new RNGooglePayPackage());
+
+      // packages.add(new StripeReactPackage());
+      // packages.add(new RNGooglePayPackage());
       // Packages that cannot be autolinked yet can be added manually here, for
       // example:
       // packages.add(new MyReactNativePackage());
