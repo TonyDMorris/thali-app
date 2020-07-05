@@ -19,15 +19,14 @@ import {
 } from 'react-native';
 
 import {Navigation} from 'react-native-navigation';
+import {baseURL, restaurantID} from './constants/constants';
 
 const App = props => {
-  const baseURL = 'https://api.towidomo.dev';
-  const resaurantId = '1';
   const [content, setContent] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`${baseURL}/restaurants/${resaurantId}`);
+      const response = await fetch(`${baseURL}/restaurants/${restaurantID}`);
       const json = await response.json();
 
       setContent(json[0]);

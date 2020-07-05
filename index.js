@@ -6,8 +6,13 @@ import {BasketProvider} from './components/basket/BasketContext';
 import FoodItemOptionsSelectionModal from './components/selection/FoodItemOptionsSelectionModal';
 import MenuDealOptions from './components/menu/MenuDealOptions';
 import BasketCheckout from './components/basket/BasketCheckout';
+import CheckoutAddressEntry from './components/basket/CheckoutAddressEntry';
 
 Navigation.registerComponent('com.myApp.Home', () => App);
+Navigation.registerComponent(
+  'com.myApp.CheckoutAddressEntry',
+  () => CheckoutAddressEntry,
+);
 Navigation.registerComponent(
   'com.myApp.Menu',
   () => props => {
