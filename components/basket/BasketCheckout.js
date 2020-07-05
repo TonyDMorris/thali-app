@@ -9,41 +9,19 @@ import {
   ScrollView,
   Platform,
   Button,
-  TouchableHighlight,
 } from 'react-native';
 import BasketInventoryItem from './BasketInventoryItem';
 import BasketInventoryDealItem from './BasketInventoryDealItem';
-import stripe from 'tipsi-stripe';
 
 import {Navigation} from 'react-native-navigation';
 
 const BasketCheckout = ({dealItems, items}) => {
-  stripe.setOptions({
-    publishableKey:
-      'pk_test_51H0Rn9A5cyq20WwH1ZifHxKJdSCRni4BX1NwnDWzgnCW7hnK81Z2Ie2LlLdb7Cp9foY4Y3rjQfdj30VZMgCfvK2w00synDt5JP',
+  const [order, setOrder] = useState({});
 
-    androidPayMode: 'test', // Android only
-  });
-
-  const [gPayisAllowed, setGPayIsAllowed] = useState(false);
   useEffect(() => {
-    () => {
-      return new Promise(async () => {
-        try {
-          const allowed = await stripe.deviceSupportsNativePay();
-          Promise.resolve(allowed);
-        } catch (error) {
-          Promise.reject(error);
-        }
-      })
-        .then(allowed => {
-          setIsAllowed(allowed);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    };
+    setOrder({totalPrice: 100, dealItems, items});
   }, []);
+
   const navigate = () => {
     Navigation.showModal({
       stack: {
@@ -52,7 +30,7 @@ const BasketCheckout = ({dealItems, items}) => {
             component: {
               name: 'com.myApp.CheckoutAddressEntry',
               passProps: {
-                order: {dealItems, items},
+                order,
               },
               options: {
                 modalPresentationStyle: 'overCurrentContext',
@@ -67,43 +45,6 @@ const BasketCheckout = ({dealItems, items}) => {
         ],
       },
     });
-  };
-  const handlePay = async () => {
-    try {
-      const token = await stripe.paymentRequestWithCardForm({
-        total_price: '100.00',
-        currency_code: 'USD',
-        shipping_address_required: true,
-        phone_number_required: true,
-        shipping_countries: ['US', 'CA'],
-        // line_items: [
-        //   {
-        //     currency_code: 'USD',
-        //     description: 'Whisky',
-        //     total_price: '50.00',
-        //     unit_price: '50.00',
-        //     quantity: '1',
-        //   },
-        //   {
-        //     currency_code: 'USD',
-        //     description: 'Vine',
-        //     total_price: '30.00',
-        //     unit_price: '30.00',
-        //     quantity: '1',
-        //   },
-        //   {
-        //     currency_code: 'USD',
-        //     description: 'Tipsi',
-        //     total_price: '20.00',
-        //     unit_price: '20.00',
-        //     quantity: '1',
-        //   },
-        // ],
-      });
-      console.log(token);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (

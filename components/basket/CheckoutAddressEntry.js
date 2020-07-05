@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,6 +9,7 @@ import {
   Dimensions,
   ImageBackground,
   TouchableHighlight,
+  ScrollView,
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import stripe from 'tipsi-stripe';
@@ -20,70 +21,62 @@ const CheckoutAddressEntry = ({order}) => {
     androidPayMode: 'test', // Android only
   });
 
-  const handlePay = async () => {
-    try {
-      const token = await stripe.paymentRequestWithCardForm({
-        total_price: '100.00',
-        currency_code: 'USD',
-        shipping_address_required: true,
-        requiredBillingAddressFields: 'full',
-        prefilledInformation: {
-          billingAddress: {
-            name: 'Gunilla Haugeh',
-            line1: 'Canary Place',
-            line2: '3',
-            city: 'Macon',
-            state: 'Georgia',
-            country: 'US',
-            postalCode: '31217',
-            email: 'ghaugeh0@printfriendly.com',
-          },
-        },
-        phone_number_required: true,
-        shipping_countries: ['US', 'CA'],
-        // line_items: [
-        //   {
-        //     currency_code: 'USD',
-        //     description: 'Whisky',
-        //     total_price: '50.00',
-        //     unit_price: '50.00',
-        //     quantity: '1',
-        //   },
-        //   {
-        //     currency_code: 'USD',
-        //     description: 'Vine',
-        //     total_price: '30.00',
-        //     unit_price: '30.00',
-        //     quantity: '1',
-        //   },
-        //   {
-        //     currency_code: 'USD',
-        //     description: 'Tipsi',
-        //     total_price: '20.00',
-        //     unit_price: '20.00',
-        //     quantity: '1',
-        //   },
-        // ],
-      });
-      console.log(token);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [gPayIsAllowed, setGPayIsAllowed] = useState(false);
   const [houseNumber, setHouseNumber] = useState('');
   const [address, setAddress] = useState('');
   const [postCode, setPostCode] = useState('');
   const [phone, setPhone] = useState('');
   const [deliveryInstructions, setDeliveryInstructions] = useState('');
 
-  const [
-    manualAddressFormIsCollapsed,
-    setManualAddressFormIsCollapsed,
-  ] = useState(true);
+  const [token, setToken] = useState({});
+  useEffect(() => {
+    const checkNative = async () => {
+      const allowed = await stripe.deviceSupportsNativePay();
+      console.log(allowed);
+      setGPayIsAllowed(allowed);
+    };
+    checkNative();
+  }, []);
 
-  const [addressDropDownIsCollapsed, setAddressDropDownIsCollapsed] = useState(
-    true,
-  );
+  const payByCard = async () => {
+    try {
+      const token = await stripe.paymentRequestWithCardForm({
+        total_price: '100.00',
+        currency_code: 'USD',
+      });
+      setToken(token);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const payByGPay = async () => {
+    try {
+      const token = await stripe.paymentRequestWithNativePay({
+        total_price: '100.00',
+        currency_code: 'USD',
+        line_items: [
+          {
+            currency_code: 'GBP',
+            description: 'your order',
+            total_price: `${order.totalPrice}`,
+            unit_price: `${order.totalPrice}`,
+            quantity: '1',
+          },
+        ],
+      });
+      setToken(token);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handlePay = gPayIsAllowed => {
+    if (gPayIsAllowed) {
+      payByGPay();
+    } else {
+      payByCard();
+    }
+  };
+
   return (
     <ImageBackground
       style={styles.container}
@@ -95,49 +88,68 @@ const CheckoutAddressEntry = ({order}) => {
             style={styles.topLogoImage}
           />
         </View>
-        <View style={styles.inputContainer}>
-          <TouchableHighlight>
-            <View>
-              <Text>select postcode</Text>
-            </View>
-          </TouchableHighlight>
-          <Collapsible collapsed={manualAddressFormIsOpen} />
-          <Collapsible collapsed={manualAddressFormIsOpen}>
+
+        <ScrollView style={styles.inputContainer}>
+          <View>
+            <Text>name</Text>
             <TextInput
               style={styles.input}
               onChangeText={text => setHouseNumber(text)}
               value={houseNumber}
-              placeholder={'house/flat number'}
+              placeholder={'Name'}
             />
+          </View>
+          <View>
+            <Text>House/Flat number</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => setHouseNumber(text)}
+              value={houseNumber}
+              placeholder={'House/Flat number'}
+            />
+          </View>
+          <View>
+            <Text>Street Address</Text>
             <TextInput
               style={styles.input}
               onChangeText={text => setAddress(text)}
               value={address}
-              placeholder={'street address'}
+              placeholder={'Street Address'}
             />
+          </View>
+          <View>
+            <Text>Postcode</Text>
             <TextInput
               style={styles.input}
               onChangeText={text => setPostCode(text)}
               value={postCode}
-              placeholder={'postcode'}
+              placeholder={'Postcode'}
             />
+          </View>
+          <View>
+            <Text>Phone Number</Text>
             <TextInput
               style={styles.input}
               onChangeText={text => setPhone(text)}
               value={phone}
-              placeholder={'phone number'}
+              placeholder={'Phone Number'}
             />
+          </View>
+          <View>
+            <Text>Additional Instructions</Text>
             <TextInput
               style={styles.input}
               onChangeText={text => setDeliveryInstructions(text)}
               value={deliveryInstructions}
-              placeholder={'additional instructions'}
+              placeholder={'Additional Instructions'}
             />
-          </Collapsible>
-        </View>
+          </View>
+        </ScrollView>
         <View style={styles.button}>
           <Button
-            onPress={handlePay}
+            onPress={() => {
+              handlePay(gPayIsAllowed);
+            }}
             color="#0398aa"
             raised={true}
             title="Pay"
@@ -172,7 +184,7 @@ const styles = StyleSheet.create({
     marginBottom: 100,
     marginTop: 10,
   },
-  inputContainer: {width: '90%'},
+  inputContainer: {width: '90%', marginTop: 40},
   input: {
     margin: 10,
     height: 40,
