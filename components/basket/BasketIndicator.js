@@ -1,13 +1,5 @@
 import React, {useContext} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Platform,
-  TouchableNativeFeedback,
-  TouchableHighlight,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faShoppingCart} from '@fortawesome/free-solid-svg-icons';
@@ -15,28 +7,6 @@ import {BasketContext} from './BasketContext';
 import {Navigation} from 'react-native-navigation';
 
 const BasketIndicator = () => {
-  const context = useContext(BasketContext);
-  const handlePress = () => {
-    Navigation.showModal({
-      stack: {
-        children: [
-          {
-            component: {
-              name: 'com.myApp.BasketCheckout',
-              options: {
-                modalPresentationStyle: 'none',
-                topBar: {
-                  title: {text: 'Checkout', alignment: 'center'},
-                  leftButtons: {},
-                },
-              },
-              passProps: {items: context.items, dealItems: context.dealItems},
-            },
-          },
-        ],
-      },
-    });
-  };
   const getTotalPriceAndQuantitiy = items => {
     return items.reduce(
       (acc, curr) => {
@@ -50,10 +20,34 @@ const BasketIndicator = () => {
       },
     );
   };
+  const context = useContext(BasketContext);
   const dealTotals = getTotalPriceAndQuantitiy(context.dealItems);
   const foodItemTotals = getTotalPriceAndQuantitiy(context.items);
   const totalPrice = dealTotals.totalPrice + foodItemTotals.totalPrice;
   const totalItems = dealTotals.totalItems + foodItemTotals.totalItems;
+
+  const handlePress = () => {
+    if (totalPrice > 0) {
+      Navigation.showModal({
+        stack: {
+          children: [
+            {
+              component: {
+                name: 'com.myApp.BasketCheckout',
+                options: {
+                  modalPresentationStyle: 'none',
+                  topBar: {
+                    title: {text: 'Checkout', alignment: 'center'},
+                  },
+                },
+                passProps: {items: context.items, dealItems: context.dealItems},
+              },
+            },
+          ],
+        },
+      });
+    }
+  };
 
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={handlePress}>
