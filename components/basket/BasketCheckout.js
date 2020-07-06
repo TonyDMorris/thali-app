@@ -10,16 +10,17 @@ import {
   Platform,
   Button,
 } from 'react-native';
+import Totals from './Totals';
 import BasketInventoryItem from './BasketInventoryItem';
 import BasketInventoryDealItem from './BasketInventoryDealItem';
 
 import {Navigation} from 'react-native-navigation';
 
-const BasketCheckout = ({dealItems, items}) => {
+const BasketCheckout = ({dealItems, items, totalPrice}) => {
   const [order, setOrder] = useState({});
 
   useEffect(() => {
-    setOrder({totalPrice: 100, dealItems, items});
+    setOrder({totalPrice: totalPrice, dealItems, items});
   }, []);
 
   const navigate = () => {
@@ -34,11 +35,6 @@ const BasketCheckout = ({dealItems, items}) => {
               },
               options: {
                 modalPresentationStyle: 'overCurrentContext',
-                topBar: {
-                  title: {
-                    text: 'Enter Delivery Address',
-                  },
-                },
               },
             },
           },
@@ -77,20 +73,12 @@ const BasketCheckout = ({dealItems, items}) => {
             );
           })}
         </ScrollView>
-        <View style={styles.totals}>
-          <View style={styles.total}>
-            <Text>Subtotal</Text>
-            <Text>£0.00</Text>
-          </View>
-          <View style={styles.total}>
-            <Text>Delivery</Text>
-            <Text>£0.00</Text>
-          </View>
-          <View style={styles.total}>
-            <Text>Total</Text>
-            <Text>£0.00</Text>
-          </View>
-        </View>
+        <Totals
+          styles={{total: styles.total, totals: styles.totals}}
+          subTotal={totalPrice}
+          total={totalPrice}
+          delivery={0}
+        />
         <View style={styles.orderButton}>
           <Button
             onPress={navigate}
@@ -180,5 +168,10 @@ styles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
+BasketCheckout.options = {
+  topBar: {
+    title: {text: 'Checkout', alignment: 'center'},
+  },
+};
 
 export default BasketCheckout;

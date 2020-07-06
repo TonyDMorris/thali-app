@@ -36,11 +36,12 @@ const BasketIndicator = () => {
                 name: 'com.myApp.BasketCheckout',
                 options: {
                   modalPresentationStyle: 'none',
-                  topBar: {
-                    title: {text: 'Checkout', alignment: 'center'},
-                  },
                 },
-                passProps: {items: context.items, dealItems: context.dealItems},
+                passProps: {
+                  items: context.items,
+                  dealItems: context.dealItems,
+                  totalPrice: totalPrice,
+                },
               },
             },
           ],

@@ -217,6 +217,12 @@ const styles = StyleSheet.create({
   },
   button: {margin: 30, width: '80%'},
 });
+
+CheckoutAddressEntry.options = {
+  topBar: {
+    title: {text: 'Delivery Address', alignment: 'center'},
+  },
+};
 //import stripe from 'tipsi-stripe';
 // stripe.setOptions({
 //   publishableKey:
