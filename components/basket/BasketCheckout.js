@@ -13,16 +13,41 @@ import {
 import Totals from './Totals';
 import BasketInventoryItem from './BasketInventoryItem';
 import BasketInventoryDealItem from './BasketInventoryDealItem';
-
+import BasketCheckoutRemoveButton from './BasketCheckoutRemoveButton';
 import {Navigation} from 'react-native-navigation';
 import {BasketContext} from './BasketContext';
+import {handleRemoveItem} from '../basket/BasketContext';
 
-const BasketCheckout = ({dealItems, items, totalPrice}) => {
-  const context = useContext(BasketContext);
+const BasketCheckout = ({dealItems, items, removeItem}) => {
+  const [receiptDealItems, setReceiptDeals] = useState([]);
+  const [receiptItems, setReceiptItems] = useState([]);
+
+  const getTotalPriceAndQuantitiy = items => {
+    return items.reduce(
+      (acc, curr) => {
+        acc.totalItems += curr.qty;
+        acc.totalPrice += curr.price * curr.qty;
+        return acc;
+      },
+      {
+        totalPrice: 0,
+        totalItems: 0,
+      },
+    );
+  };
+
+  const dealTotals = getTotalPriceAndQuantitiy(receiptDealItems);
+  const foodItemTotals = getTotalPriceAndQuantitiy(receiptItems);
+  const totalPrice = dealTotals.totalPrice + foodItemTotals.totalPrice;
+
+  useEffect(() => {
+    setReceiptDeals(dealItems);
+    setReceiptItems(items);
+  }, []);
+
   const [order, setOrder] = useState({});
 
   useEffect(() => {
-    console.log(context.items);
     setOrder({totalPrice: totalPrice, dealItems, items});
   }, []);
 
@@ -62,17 +87,35 @@ const BasketCheckout = ({dealItems, items, totalPrice}) => {
           <View style={styles.orderTextBox}>
             <Text style={styles.orderText}>{`Your order from \n Thali`}</Text>
           </View>
-          {dealItems.map((item, index) => {
+          {receiptDealItems.map((item, index) => {
             return (
-              <BasketInventoryDealItem
-                key={`${item.id}${index}deal`}
-                {...item}
-              />
+              <View style={styles.infoAndRemoveGroup}>
+                <BasketInventoryDealItem
+                  key={`${item.id}${index}deal`}
+                  {...item}
+                />
+                <BasketCheckoutRemoveButton
+                  index={index}
+                  removeItem={index => {
+                    removeItem(index, 'deal');
+                    handleRemoveItem(index, setReceiptDeals);
+                  }}
+                />
+              </View>
             );
           })}
-          {items.map((item, index) => {
+          {receiptItems.map((item, index) => {
             return (
-              <BasketInventoryItem key={`${item.id}${index}food`} {...item} />
+              <View style={styles.infoAndRemoveGroup}>
+                <BasketInventoryItem key={`${item.id}${index}food`} {...item} />
+                <BasketCheckoutRemoveButton
+                  index={index}
+                  removeItem={index => {
+                    removeItem(index, 'item');
+                    handleRemoveItem(index, setReceiptItems);
+                  }}
+                />
+              </View>
             );
           })}
         </ScrollView>
@@ -170,6 +213,10 @@ styles = StyleSheet.create({
     marginBottom: 20,
     width: '90%',
     alignSelf: 'center',
+  },
+  infoAndRemoveGroup: {
+    flexDirection: 'row',
+    marginBottom: 5,
   },
 });
 BasketCheckout.options = {

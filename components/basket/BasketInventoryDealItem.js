@@ -26,7 +26,7 @@ const BasketInventoryDealItem = ({name, menu_deal_options, price, qty}) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {width: '100%'},
+  container: {flexGrow: 1, marginRight: 15},
   nameAndPrice: {justifyContent: 'space-between', flexDirection: 'row'},
   name: {maxWidth: '50%'},
   options: {marginLeft: 20},

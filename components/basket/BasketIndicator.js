@@ -41,6 +41,7 @@ const BasketIndicator = () => {
                   items: context.items,
                   dealItems: context.dealItems,
                   totalPrice: totalPrice,
+                  removeItem: context.removeItem,
                 },
               },
             },

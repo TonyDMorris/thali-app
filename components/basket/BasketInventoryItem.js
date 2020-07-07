@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Button} from 'react-native';
 
 const BasketInventoryItem = ({qty, name, food_item_options, price}) => {
   return (
@@ -26,7 +26,7 @@ const BasketInventoryItem = ({qty, name, food_item_options, price}) => {
 export default BasketInventoryItem;
 
 const styles = StyleSheet.create({
-  container: {width: '100%'},
+  container: {flexGrow: 1, marginRight: 15},
   nameAndPrice: {justifyContent: 'space-between', flexDirection: 'row'},
   name: {maxWidth: '50%'},
   options: {marginLeft: 20},

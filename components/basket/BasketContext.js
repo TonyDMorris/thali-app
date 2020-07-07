@@ -54,6 +54,11 @@ export const handleDealItems = (dealItem, dealItems, ctxFunc) => {
   });
 };
 
+export const handleRemoveItem = (index, ctxFunc) => {
+  ctxFunc(prevItems => {
+    return [...prevItems.slice(0, index), ...prevItems.slice(index + 1)];
+  });
+};
 export const BasketContext = createContext({});
 export const BasketProvider = props => {
   const [items, setItems] = useState([]);
@@ -66,9 +71,24 @@ export const BasketProvider = props => {
   const addDealItem = dealItem => {
     handleDealItems(dealItem, dealItems, setDealItems);
   };
+
+  const removeItem = (index, type) => {
+    if (type === 'deal') {
+      handleRemoveItem(index, setDealItems);
+    } else {
+      handleRemoveItem(index, setItems);
+    }
+  };
+
   return (
     <BasketContext.Provider
-      value={{dealItems: dealItems, items: items, addItem, addDealItem}}>
+      value={{
+        dealItems: dealItems,
+        items: items,
+        addItem,
+        addDealItem,
+        removeItem: removeItem,
+      }}>
       {props.children}
     </BasketContext.Provider>
   );

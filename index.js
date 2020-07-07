@@ -58,6 +58,14 @@ Navigation.registerComponent(
   () => Menu,
 );
 Navigation.setDefaultOptions({
+  animations: {
+    push: {
+      waitForRender: true,
+    },
+    showModal: {
+      waitForRender: true,
+    },
+  },
   statusBar: {},
   topBar: {
     backButton: {
