@@ -21,14 +21,29 @@ import {
 
 const CheckoutAddressEntry = ({order}) => {
   const [details, setDetails] = useState({
-    name: {text: '', error: false},
-    houseNumber: {text: '', error: false},
-    address: {text: '', error: false},
-    postcode: {text: '', error: false},
-    phone: {text: '', error: false},
-    email: {text: '', error: false},
+    name: {text: '', error: true},
+    houseNumber: {text: '', error: true},
+    address: {text: '', error: true},
+    postcode: {text: '', error: true},
+    phone: {text: '', error: true},
+    email: {text: '', error: true},
     additionalInstructions: {text: '', error: false},
   });
+
+  const [formIsInittiallyInvalid, setFormIsInittiallyInvalid] = useState(true);
+
+  const formIsInvalid = details => {
+    const keys = Object.keys(details);
+    const isValid = keys.reduce((acc, curr) => {
+      if (details[curr].error) {
+        return false;
+      } else {
+        return acc;
+      }
+    }, true);
+
+    return !isValid;
+  };
 
   const validateAndApply = (name, text, hook) => {
     const validators = {
@@ -71,6 +86,7 @@ const CheckoutAddressEntry = ({order}) => {
     hook(prevDetails => {
       prevDetails[name].text = text;
       prevDetails[name].error = validators[name](text).error;
+
       return {...prevDetails};
     });
   };
@@ -89,9 +105,9 @@ const CheckoutAddressEntry = ({order}) => {
 
         <ScrollView style={styles.TextInputContainer}>
           <FormInput
-            error={details.name.error}
-            fs
+            error={details.name.text.length > 0 && details.name.error}
             onChangeText={text => {
+              setFormIsInittiallyInvalid(false);
               validateAndApply('name', text, setDetails);
             }}
             value={details.name.text}
@@ -100,7 +116,9 @@ const CheckoutAddressEntry = ({order}) => {
             icon={faFileSignature}
           />
           <FormInput
-            error={details.houseNumber.error}
+            error={
+              details.houseNumber.text.length > 0 && details.houseNumber.error
+            }
             onChangeText={text => {
               validateAndApply('houseNumber', text, setDetails);
             }}
@@ -110,7 +128,7 @@ const CheckoutAddressEntry = ({order}) => {
             icon={faAddressCard}
           />
           <FormInput
-            error={details.address.error}
+            error={details.address.text.length > 0 && details.address.error}
             onChangeText={text => {
               validateAndApply('address', text, setDetails);
             }}
@@ -120,7 +138,7 @@ const CheckoutAddressEntry = ({order}) => {
             icon={faAddressCard}
           />
           <FormInput
-            error={details.postcode.error}
+            error={details.postcode.text.length > 0 && details.postcode.error}
             onChangeText={text => {
               validateAndApply('postcode', text, setDetails);
             }}
@@ -130,7 +148,7 @@ const CheckoutAddressEntry = ({order}) => {
             icon={faEnvelopeSquare}
           />
           <FormInput
-            error={details.phone.error}
+            error={details.phone.text.length > 0 && details.phone.error}
             onChangeText={text => {
               validateAndApply('phone', text, setDetails);
             }}
@@ -140,7 +158,7 @@ const CheckoutAddressEntry = ({order}) => {
             icon={faPhone}
           />
           <FormInput
-            error={details.email.error}
+            error={details.email.text.length > 0 && details.email.error}
             onChangeText={text => {
               validateAndApply('email', text, setDetails);
             }}
@@ -151,7 +169,10 @@ const CheckoutAddressEntry = ({order}) => {
           />
 
           <FormInput
-            error={details.additionalInstructions.error}
+            error={
+              details.additionalInstructions.text.length > 0 &&
+              details.additionalInstructions.error
+            }
             icon={false}
             styles={{...styles.TextInput, ...styles.deliveryInstructions}}
             onChangeText={text => {
@@ -163,6 +184,9 @@ const CheckoutAddressEntry = ({order}) => {
         </ScrollView>
         <View style={styles.button}>
           <Button
+            disabled={
+              formIsInvalid(details) === true || formIsInittiallyInvalid
+            }
             onPress={() => {
               handlePay(gPayIsAllowed);
             }}
@@ -175,8 +199,6 @@ const CheckoutAddressEntry = ({order}) => {
     </ImageBackground>
   );
 };
-
-export default CheckoutAddressEntry;
 
 const styles = StyleSheet.create({
   container: {
@@ -223,6 +245,8 @@ CheckoutAddressEntry.options = {
     title: {text: 'Delivery Address', alignment: 'center'},
   },
 };
+
+export default CheckoutAddressEntry;
 //import stripe from 'tipsi-stripe';
 // stripe.setOptions({
 //   publishableKey:

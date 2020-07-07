@@ -35,7 +35,7 @@ const BasketIndicator = () => {
               component: {
                 name: 'com.myApp.BasketCheckout',
                 options: {
-                  modalPresentationStyle: 'none',
+                  modalPresentationStyle: 'overCurrentContext',
                 },
                 passProps: {
                   items: context.items,

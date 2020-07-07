@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 });
 Menu.options = {
   topBar: {
-    title: {text: 'MENU', alignment: 'center'},
+    title: {text: 'Menu', alignment: 'center'},
   },
 };
 

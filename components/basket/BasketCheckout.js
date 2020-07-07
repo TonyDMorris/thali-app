@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -15,11 +15,14 @@ import BasketInventoryItem from './BasketInventoryItem';
 import BasketInventoryDealItem from './BasketInventoryDealItem';
 
 import {Navigation} from 'react-native-navigation';
+import {BasketContext} from './BasketContext';
 
 const BasketCheckout = ({dealItems, items, totalPrice}) => {
+  const context = useContext(BasketContext);
   const [order, setOrder] = useState({});
 
   useEffect(() => {
+    console.log(context.items);
     setOrder({totalPrice: totalPrice, dealItems, items});
   }, []);
 
@@ -91,6 +94,7 @@ const BasketCheckout = ({dealItems, items, totalPrice}) => {
     </ImageBackground>
   );
 };
+
 styles = StyleSheet.create({
   container: {
     height: '100%',
@@ -173,5 +177,4 @@ BasketCheckout.options = {
     title: {text: 'Checkout', alignment: 'center'},
   },
 };
-
 export default BasketCheckout;

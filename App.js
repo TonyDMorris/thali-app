@@ -68,6 +68,7 @@ App.options = {
   topBar: {
     title: {
       text: 'Thali',
+      alignment: 'center',
     },
   },
 };
